@@ -1,0 +1,52 @@
+vars:
+  public_data: <PATH_TO_DATASET_STORAGE>
+
+# the account name is only used to describe from which account the run was started from
+# this is more descriptive than the hostname as it also specifies who ran it
+account_name: MAE-CT
+
+# path to store logs/checkpoints
+output_path: ??? 
+# path where pretrained models are stored
+# model_path: <MODEL_PATH>
+
+# global datasets
+global_dataset_paths:
+  imagenet1k: ${vars.public_data}/ImageNet/ImageNet1K
+  imagenet1k_msn1perclass_split1: ${vars.public_data}/ImageNet1K/imagenet1k_msn1perclass_split1
+  imagenet1k_msn1perclass_split2: ${vars.public_data}/ImageNet1K/imagenet1k_msn1perclass_split2
+  imagenet1k_msn1perclass_split3: ${vars.public_data}/ImageNet1K/imagenet1k_msn1perclass_split3
+  imagenet1k_msn2perclass_split1: ${vars.public_data}/ImageNet1K/imagenet1k_msn2perclass_split1
+  imagenet1k_msn2perclass_split2: ${vars.public_data}/ImageNet1K/imagenet1k_msn2perclass_split2
+  imagenet1k_msn2perclass_split3: ${vars.public_data}/ImageNet1K/imagenet1k_msn2perclass_split3
+  imagenet1k_msn5perclass_split1: ${vars.public_data}/ImageNet1K/imagenet1k_msn5perclass_split1
+  imagenet1k_msn5perclass_split2: ${vars.public_data}/ImageNet1K/imagenet1k_msn5perclass_split2
+  imagenet1k_msn5perclass_split3: ${vars.public_data}/ImageNet1K/imagenet1k_msn5perclass_split3
+  imagenet1k_msn1percent: ${vars.public_data}/ImageNet1K/imagenet1k_msn1percent
+  imagenet1k_10percent_simclrv2: ${vars.public_data}/ImageNet1K/imagenet1k_10percent_simclrv2
+  imagenet_a: ${vars.public_data}/ImageNet-A
+  imagenet_r: ${vars.public_data}/ImageNet-R
+  imagenet_v2: ${vars.public_data}/ImageNet-V2
+  imagenet15_dogs: ${vars.public_data}/ImageNet15/imagenet15_dogs
+
+# OPTIONAL: path to (fast) local storage
+local_dataset_path: <PATH_TO_LOCAL_SSD>
+
+# wandb
+# disabled -> don't use wandb
+# offline -> use wandb in offline mode
+# online -> use wandb in online mode
+default_wandb_mode: disabled
+
+# DDP
+master_port: 55555
+
+# cudnn
+default_cudnn_benchmark: true
+default_cudnn_deterministic: false
+# enable/disable cuda profiling
+# - enabled: after every cuda operation to be profiled a torch.cuda.synchronize and dist.barrier is appended -> slower
+# - disabled: cuda operations are not profiled
+default_cuda_profiling: false
+# sync batchnorm
+default_sync_batchnorm: true

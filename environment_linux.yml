@@ -1,0 +1,24 @@
+channels:
+  - conda-forge
+  - pytorch
+  - defaults
+dependencies:
+  - python=3.9
+  - pytorch
+  - torchvision
+  - einops
+  - torchmetrics
+  - wandb
+  - timm
+  - pyyaml
+  - scikit-learn
+  - umap-learn
+  - pandas
+  - matplotlib
+  - pytest
+  - pip
+  - pip:
+      - kappabenchmark
+      - kappaconfig
+      - kappadata
+      - kappaprofiler
