@@ -91,7 +91,6 @@ model:
       - 9
       - 10
       - 11
-
     initializer:
       checkpoint: last
       kind: previous_run_initializer
@@ -130,7 +129,6 @@ model:
         model_name: mae_contheads_vit.head.nnclr
         stage_id: 118qpo63
         stage_name: stage_train_head
-
 trainer:
   kind: mae_contheads_vit_trainer
   max_epochs: 40
