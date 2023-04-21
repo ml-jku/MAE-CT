@@ -9,28 +9,28 @@ from our paper [Contrastive Tuning: A Little Help to Make Masked Autoencoders Fo
 ## MAE reimplementation
 
 
-|Encoder|Pretrain|Probing|k-NN|
+|Weights|Pretrain|Probing|k-NN|
 |:---:|:---:|:---:|:---:|
-|ViT-B/16|[hp](https://github.com/ml-jku/MAE-CT/blob/06326017fa605a9b650da36b1f63dd0376e4bd28/yamls/mae/base16.yaml)|66.7|51.1|
-|ViT-L/16|[hp](https://github.com/ml-jku/MAE-CT/blob/06326017fa605a9b650da36b1f63dd0376e4bd28/yamls/mae/large16.yaml)|75.9|60.6|
-|ViT-H/16|[hp](https://github.com/ml-jku/MAE-CT/blob/06326017fa605a9b650da36b1f63dd0376e4bd28/yamls/mae/huge16.yaml)|78.0|61.1|
+|[ViT-B/16](https://ml.jku.at/research/maect/download/mae_reimpl_base16.th)|[hp](https://github.com/ml-jku/MAE-CT/blob/06326017fa605a9b650da36b1f63dd0376e4bd28/yamls/mae/base16.yaml)|66.7|51.1|
+|[ViT-L/16](https://ml.jku.at/research/maect/download/mae_reimpl_large16.th)|[hp](https://github.com/ml-jku/MAE-CT/blob/06326017fa605a9b650da36b1f63dd0376e4bd28/yamls/mae/large16.yaml)|75.9|60.6|
+|[ViT-H/16](https://ml.jku.at/research/maect/download/mae_reimpl_huge16.th)|[hp](https://github.com/ml-jku/MAE-CT/blob/06326017fa605a9b650da36b1f63dd0376e4bd28/yamls/mae/huge16.yaml)|78.0|61.1|
 
 
 ## MAE-CT
 
 |Encoder|Pretrain|Probing|k-NN|
 |:---:|:---:|:---:|:---:|
-|ViT-B/16|[hp](https://github.com/ml-jku/MAE-CT/blob/06326017fa605a9b650da36b1f63dd0376e4bd28/yamls/maect/base16.yaml)|73.5|64.1|
-|ViT-L/16|[hp](https://github.com/ml-jku/MAE-CT/blob/06326017fa605a9b650da36b1f63dd0376e4bd28/yamls/maect/large16.yaml)|80.2|78.0|
-|ViT-H/16|[hp](https://github.com/ml-jku/MAE-CT/blob/06326017fa605a9b650da36b1f63dd0376e4bd28/yamls/maect/huge16.yaml)|81.5|79.4|
+|[ViT-B/16](https://ml.jku.at/research/maect/download/maect_base16.th)|[hp](https://github.com/ml-jku/MAE-CT/blob/06326017fa605a9b650da36b1f63dd0376e4bd28/yamls/maect/base16.yaml)|73.5|64.1|
+|[ViT-L/16](https://ml.jku.at/research/maect/download/maect_base16.th)|[hp](https://github.com/ml-jku/MAE-CT/blob/06326017fa605a9b650da36b1f63dd0376e4bd28/yamls/maect/large16.yaml)|80.2|78.0|
+|[ViT-H/16](https://ml.jku.at/research/maect/download/maect_base16.th)|[hp](https://github.com/ml-jku/MAE-CT/blob/06326017fa605a9b650da36b1f63dd0376e4bd28/yamls/maect/huge16.yaml)|81.5|79.4|
 
 ## MAE-CT<sub>*aug*</sub>
 
 |Encoder|Pretrain|Probing|k-NN|
 |:---:|:---:|:---:|:---:|
-|ViT-B/16|[hp](https://github.com/ml-jku/MAE-CT/blob/06326017fa605a9b650da36b1f63dd0376e4bd28/yamls/maect/base16.yaml)|73.5|64.1|
-|ViT-L/16|[hp](https://github.com/ml-jku/MAE-CT/blob/06326017fa605a9b650da36b1f63dd0376e4bd28/yamls/maect/large16.yaml)|80.2|78.0|
-|ViT-H/16|[hp](https://github.com/ml-jku/MAE-CT/blob/06326017fa605a9b650da36b1f63dd0376e4bd28/yamls/maect/huge16.yaml)|81.5|79.4|
+|[ViT-B/16](https://ml.jku.at/research/maect/download/maect_base16.th)|[hp](https://github.com/ml-jku/MAE-CT/blob/06326017fa605a9b650da36b1f63dd0376e4bd28/yamls/maect/base16.yaml)|73.5|64.1|
+|[ViT-L/16](https://ml.jku.at/research/maect/download/maect_large16.th)|[hp](https://github.com/ml-jku/MAE-CT/blob/06326017fa605a9b650da36b1f63dd0376e4bd28/yamls/maect/large16.yaml)|80.2|78.0|
+|[ViT-H/16](https://ml.jku.at/research/maect/download/maect_huge16.th)|[hp](https://github.com/ml-jku/MAE-CT/blob/06326017fa605a9b650da36b1f63dd0376e4bd28/yamls/maect/huge16.yaml)|81.5|79.4|
 
 
 
@@ -51,7 +51,7 @@ For low-shot evaluations, we use the official splits from
 [SimCLRv2](https://github.com/google-research/simclr/tree/master/imagenet_subsets)
 and [MSN](https://github.com/facebookresearch/msn).
 
-## [Optional] configure weights and biases
+## [Optional] Configure Weights & Biases
 This repo uses [Weights & Biases](https://wandb.ai) for experiment tracking, but offers an alternative
 in case you do not want to use it. By default W&B logging is disabled via the `default_wandb_mode: disabled`
 configuration in the `static_config.yaml`. You can enable it via `static_config.yaml` 
@@ -62,6 +62,40 @@ You can create this via `cp template_wandb_config.yaml wandb_config.yaml` and ad
 
 # Run
 
-- `--hp <YAML>` e.g. `--hp hyperparams.yaml` define what to run
-- `--devices <DEVICES>` e.g. `--devices 0` to run on GPU0 or `--devices 0,1,2,3` to run on 4 GPUs
+To run your own experiments or reproduce our results you have to specify the desired hyperparameters via a yaml file.
+Afterwards start the training/evaluation run by specifying the following CLI arguments for `main_train.py`
+- `--hp <YAML>` (e.g. `--hp yamls/mae/base16.yaml`)
+- `--devices <DEVICES>` (e.g. `--devices 0` to run on GPU0 or `--devices 0,1,2,3` to run on 4 GPUs)
 
+## Output
+
+Each yaml file will create a folder in your output directory (defined via `output_path` in `static_config.yaml`).
+The output directory is structured into subdirectories with the `stage_name` and the `stage_id`. Example: 
+`~/output_path/pretrain/9j3kl092`
+
+The output directory of each run is organized as follows:
+- `checkpoints`: Model weights will be stored here (choose interval by adjusting the values of the `checkpoint_logger`
+  in the yaml file of a run)
+- `primitive`: All metrics that are written to Weights & Biases are also stored locally here. If you don't want to use 
+  W&B you can parse metrics from the files within this directory.
+- `log.txt`: logfile
+- `hp_resolved.yaml`: a copy of the yaml file that was specified in the `--hp` CLI arg
+
+
+The yamls used for our paper can be found [here](https://github.com/ml-jku/MAE-CT/tree/main/yamls).
+Each step of MAE-CT requires its own yaml file where the later steps require a reference to a checkpoint of a previous
+step. This can be defined by changing the `stage_id` of the `initializer` objects within the yaml.
+
+## Example
+Pretrain an MAE on 8 GPUs:
+
+`python main_train.py --hp yamls/mae/base16.yaml --devices 0,1,2,3,4,5,6,7`
+
+
+An example to train a NNCLR head on frozen encoder features will be up soon.
+
+
+Apply contrastive tuning on 8 GPUs 
+(change the `stage_id` value of the yaml file to the `stage_id` of your previous step):
+
+`python main_train.py --hp yamls/maect/base16.yaml --devices 0,1,2,3,4,5,6,7`
