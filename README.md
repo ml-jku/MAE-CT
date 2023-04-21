@@ -99,3 +99,14 @@ Apply contrastive tuning on 8 GPUs
 (change the `stage_id` value of the yaml file to the `stage_id` of your previous step):
 
 `python main_train.py --hp yamls/maect/base16.yaml --devices 0,1,2,3,4,5,6,7`
+
+# Citation
+If you find this repository useful, please consider giving it a :star: and cite us
+```
+@article{lehner2023maect,
+      title={Contrastive Tuning: A Little Help to Make Masked Autoencoders Forget}, 
+      author={Johannes Lehner and Benedikt Alkin and Andreas Fürst and Elisabeth Rumetshofer and Lukas Miklautz and Sepp Hochreiter},
+      journal={arXiv preprint arXiv:2304.10520},
+      year={2023}
+}
+```
