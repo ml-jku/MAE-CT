@@ -1,0 +1,74 @@
+stage_name: pretrain
+datasets:
+  train:
+    kind: image_net
+    version: imagenet1k
+    split: train
+    x_transform:
+    - interpolation: bicubic
+      kind: random_resized_crop
+      scale:
+      - 0.2
+      - 1.0
+      size: 224
+    - kind: random_horizontal_flip
+    - kind: kd_image_net_norm
+    sample_wrappers:
+    - kind: multi_view_wrapper
+      n_views: 2
+model:
+  kind: mae_contheads_vit
+  encoder:
+    kind: vit.masked_encoder
+    patch_size: 16
+    embedding_dim: 1024
+    depth: 24
+    attention_heads: 16
+    optim:
+      kind: adamw
+      lr: 0.00015
+      weight_decay: 0.05
+      betas:
+      - 0.9
+      - 0.95
+      schedule:
+      - end_checkpoint:
+          epoch: 20
+        exclude_first: true
+        exclude_last: true
+        kind: linear_increasing
+      - exclude_last: true
+        kind: cosine_decreasing
+  decoder:
+    kind: vit.masked_decoder
+    depth: 8
+    embedding_dim: 512
+    attention_heads: 16
+    optim:
+      kind: adamw
+      lr: 0.00015
+      weight_decay: 0.05
+      betas:
+      - 0.9
+      - 0.95
+      schedule:
+      - end_checkpoint:
+          epoch: 20
+        exclude_first: true
+        exclude_last: true
+        kind: linear_increasing
+      - exclude_last: true
+        kind: cosine_decreasing
+trainer:
+  kind: mae_contheads_vit_trainer
+  max_epochs: 800
+  effective_batch_size: 1024
+  precision: bfloat16
+  mask_generator:
+    kind: random_mask_generator
+    mask_ratio: 0.75
+  normalize_pixels: true
+  log_every_n_epochs: 1
+  loggers:
+  - kind: checkpoint_logger
+    every_n_epochs: 50

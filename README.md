@@ -1,17 +1,42 @@
 # MAE-CT: Masked Autoencoder Contrastive Tuning
 
 Pytorch implementation of **M**asked **A**uto**E**ncoder **C**ontrastive **T**uning (MAE-CT) 
-from our paper Contrastive Tuning: A Little Help to Make Masked Autoencoders Forget.
+from our paper [Contrastive Tuning: A Little Help to Make Masked Autoencoders Forget](https://arxiv.org/abs/2304.10520).
 
 
-# Checkpoints
+# Pretrained Checkpoints
 
-Checkpoints and their training configuration files will available shortly.
+## MAE reimplementation
+
+
+|Encoder|Pretrain|Probing|k-NN|
+|:---:|:---:|:---:|:---:|
+|ViT-B/16|hp|66.7|51.1|
+|ViT-L/16|hp|75.9|60.6|
+|ViT-H/16|hp|78.0|61.1|
+
+
+## MAE-CT
+
+|Encoder|Pretrain|Probing|k-NN|
+|:---:|:---:|:---:|:---:|
+|ViT-B/16|hp|73.5|64.1|
+|ViT-L/16|hp|80.2|78.0|
+|ViT-H/16|hp|81.5|79.4|
+
+## MAE-CT<sub>*aug*</sub>
+
+|Encoder|Pretrain|Probing|k-NN|
+|:---:|:---:|:---:|:---:|
+|ViT-B/16|hp|73.5|64.1|
+|ViT-L/16|hp|80.2|78.0|
+|ViT-H/16|hp|81.5|79.4|
+
+
 
 
 # Setup
-- setup environment: `conda env create --file environment_linux.yml --name maect`
-- install cyanure package for logistic regression `pip install cyanure-mkl`
+Setup a conda environment: `conda env create --file environment_linux.yml --name maect`
 
 We use [FlashAttention](https://github.com/HazyResearch/flash-attention)
 ([paper](https://arxiv.org/abs/2205.14135)) to greatly accelerate computations. 

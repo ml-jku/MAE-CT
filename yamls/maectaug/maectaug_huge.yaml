@@ -1,0 +1,279 @@
+datasets:
+  test:
+    kind: image_net
+    sample_wrappers:
+    - kind: x_transform_wrapper
+      transform:
+      - interpolation: bicubic
+        kind: kd_resize
+        size: 256
+      - kind: center_crop
+        size: 224
+      - kind: kd_image_net_norm
+    - configs:
+      - n_views: 2
+      kind: kd_multi_view_wrapper
+    split: test
+    version: imagenet1k
+  train:
+    kind: image_net
+    sample_wrappers:
+    - kind: multi_view_wrapper
+      transforms:
+      - - interpolation: bicubic
+          kind: kd_random_resized_crop
+          scale:
+          - 0.08
+          - 1.0
+          size: 224
+        - kind: kd_random_horizontal_flip
+        - brightness: 0.4
+          contrast: 0.4
+          hue: 0.1
+          kind: kd_random_color_jitter
+          p: 0.8
+          saturation: 0.2
+        - kind: kd_gaussian_blur_pil
+          sigma:
+          - 0.1
+          - 2.0
+        - kind: kd_random_grayscale
+          p: 0.2
+        - kind: kd_image_net_norm
+      - - interpolation: bicubic
+          kind: kd_random_resized_crop
+          scale:
+          - 0.08
+          - 1.0
+          size: 224
+        - kind: kd_random_horizontal_flip
+        - brightness: 0.4
+          contrast: 0.4
+          hue: 0.1
+          kind: kd_random_color_jitter
+          p: 0.8
+          saturation: 0.2
+        - kind: kd_random_gaussian_blur_pil
+          p: 0.1
+          sigma:
+          - 0.1
+          - 2.0
+        - kind: kd_random_grayscale
+          p: 0.2
+        - kind: kd_random_solarize
+          p: 0.2
+          threshold: 128
+        - kind: kd_image_net_norm
+    split: train
+    version: imagenet1k
+  val:
+    dataset_wrappers:
+    - kind: shuffle_wrapper
+      seed: 0
+    - end_index: 120000
+      kind: subset_wrapper
+    kind: image_net
+    sample_wrappers:
+    - kind: x_transform_wrapper
+      transform:
+      - interpolation: bicubic
+        kind: kd_resize
+        size: 256
+      - kind: center_crop
+        size: 224
+      - kind: kd_image_net_norm
+    - configs:
+      - n_views: 2
+      kind: kd_multi_view_wrapper
+    split: train
+    version: imagenet1k
+model:
+  contrastive_heads:
+    nnclr_1e4_cls:
+      detach: false
+      initializer:
+        checkpoint: last
+        kind: previous_run_initializer
+        model_name: mae_contheads_vit.head.nnclr_cls_1e4_015
+        stage_id: 11bww6z5
+        stage_name: stage_train_head
+      kind: contrastive_heads.nnclr_ema_queue_head
+      kwargs:
+        output_dim: 256
+        pred_hidden_dim: 4096
+        proj_hidden_dim: 2048
+        queue_size: 65536
+      loss_weight: 1.0
+      optim:
+        betas:
+        - 0.9
+        - 0.95
+        kind: adamw
+        lr: 0.0005
+        schedule:
+        - end_percent: 20
+          exclude_first: true
+          exclude_last: true
+          kind: linear_increasing
+        - exclude_last: true
+          kind: cosine_decreasing
+        weight_decay: 1.0e-05
+      pooling:
+        kind: class_token
+      target_factor: 0.995
+      temperature: 0.35
+      topk: 20
+  encoder:
+    freezers:
+    - block_idxs:
+      - 0
+      - 1
+      - 2
+      - 3
+      - 4
+      - 5
+      - 6
+      - 7
+      - 8
+      - 9
+      - 10
+      - 11
+      - 12
+      - 13
+      - 14
+      - 15
+      kind: vit_block_freezer
+    initializer:
+      checkpoint: last
+      kind: previous_run_initializer
+      model_name: mae_contheads_vit.encoder
+      stage_id: 11bww6z5
+      stage_name: stage_train_head
+    kind: vit.masked_encoder
+    kwargs:
+      attention_heads: 16
+      depth: 32
+      embedding_dim: 1280
+      patch_size: 14
+    optim:
+      betas:
+      - 0.9
+      - 0.95
+      kind: adamw
+      lr: 0.0001
+      param_group_modifiers:
+      - decay: 0.65
+        kind: layerwise_lr_decay_modifier
+      schedule:
+      - end_percent: 20
+        exclude_first: true
+        exclude_last: true
+        kind: linear_increasing
+      - exclude_last: true
+        kind: cosine_decreasing
+      weight_decay: 0.05
+    patch_size: 16
+  kind: mae_contheads_vit
+stage_name: stage2
+trainer:
+  effective_batch_size: 512
+  kind: mae_contheads_vit_trainer
+  log_every_n_epochs: 1
+  loggers:
+  - every_n_samples: 65536
+    kind: group_update_output_logger
+    pattern: nn_accuracy
+  - every_n_epochs: 1
+    kind: group_update_output_logger
+    pattern: nn_accuracy
+  - every_n_updates: 50
+    kind: group_update_output_logger
+    pattern: loss_weight
+  - every_n_epochs: 10
+    kind: checkpoint_logger
+  - every_n_epochs: 5
+    kind: ema_logger
+    model_paths:
+    - encoder
+    target_factors:
+    - 0.9999
+  - every_n_epochs: 1
+    extractors:
+    - block_indices:
+      - 31
+      finalizer:
+        kind: concat_half_finalizer
+      kind: vit_block_extractor
+      model_path: encoder
+      pooling:
+        kind: class_token
+      use_next_norm: true
+    - block_indices:
+      - 30
+      finalizer:
+        kind: concat_half_finalizer
+      kind: vit_block_extractor
+      model_path: encoder
+      pooling:
+        kind: class_token
+      use_next_norm: true
+    - block_indices:
+      - 29
+      finalizer:
+        kind: concat_half_finalizer
+      kind: vit_block_extractor
+      model_path: encoder
+      pooling:
+        kind: class_token
+      use_next_norm: true
+    - block_indices:
+      - 28
+      finalizer:
+        kind: concat_half_finalizer
+      kind: vit_block_extractor
+      model_path: encoder
+      pooling:
+        kind: class_token
+      use_next_norm: true
+    - block_indices:
+      - 27
+      finalizer:
+        kind: concat_half_finalizer
+      kind: vit_block_extractor
+      model_path: encoder
+      pooling:
+        kind: class_token
+      use_next_norm: true
+    - block_indices:
+      - 26
+      finalizer:
+        kind: concat_half_finalizer
+      kind: vit_block_extractor
+      model_path: encoder
+      pooling:
+        kind: class_token
+      use_next_norm: true
+    - allow_multiple_outputs: true
+      finalizer:
+        index: 0
+        kind: index_finalizer
+      kind: generic_extractor
+      model_path: contrastive_heads.nnclr_1e4_cls.projector
+    kind: knn_metrics_logger
+    knns:
+    - 1
+    - 2
+    - 3
+    - 5
+    - 10
+    - 20
+    - 30
+    - 50
+    test_dataset_key: test
+    train_dataset_key: val
+  mask_generator:
+    kind: random_mask_generator
+    mask_ratio: 0.0
+  max_epochs: 40
+  normalize_pixels: true
+  precision: bfloat16

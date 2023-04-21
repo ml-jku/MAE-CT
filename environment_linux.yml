@@ -10,6 +10,7 @@ dependencies:
   - torchmetrics
   - wandb
   - timm
+  - cyanure-mkl
   - pyyaml
   - scikit-learn
   - umap-learn

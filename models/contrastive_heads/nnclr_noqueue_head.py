@@ -5,7 +5,7 @@ from .base.contrastive_head_base import ContrastiveHeadBase
 
 
 class NnclrNoqueueHead(ContrastiveHeadBase):
-    def __init__(self, temperature, proj_hidden_dim, pred_hidden_dim,transposed=False, **kwargs):
+    def __init__(self, temperature, proj_hidden_dim, pred_hidden_dim, transposed=False, **kwargs):
         self.proj_hidden_dim = proj_hidden_dim
         self.pred_hidden_dim = pred_hidden_dim
         self.projector, self.predictor = None, None
