@@ -6,9 +6,10 @@ from our paper <br/>
 
 This repository provides:
 
-- Pretrained checkpoints for [MAE](https://github.com/ml-jku/MAE-CT#mae-reimplementation)
-  , [MAE-CT](https://github.com/ml-jku/MAE-CT#mae-ct) and [MAE-CT<sub>*
-  aug*</sub>](https://github.com/ml-jku/MAE-CT#mae-ctaug)
+- Pretrained checkpoints for 
+  [MAE](https://github.com/ml-jku/MAE-CT#mae-reimplementation), 
+  [MAE-CT](https://github.com/ml-jku/MAE-CT#mae-ct) and 
+  [MAE-CT<sub>*aug*</sub>](https://github.com/ml-jku/MAE-CT#mae-ctaug)
 - All hyperparameters for reproducability
 - Instructions to generate low-shot datasets for evaluation
 - Instructions on how to use our models as backbone for arbitrary downstream tasks (coming soon)
