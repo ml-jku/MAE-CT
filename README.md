@@ -51,6 +51,9 @@ For low-shot evaluations, we use the official splits from
 [SimCLRv2](https://github.com/google-research/simclr/tree/master/imagenet_subsets)
 and [MSN](https://github.com/facebookresearch/msn).
 
+To generate these ImageNet subsets we use the 
+[ImageNetSubsetGenerator](https://github.com/BenediktAlkin/ImageNetSubsetGenerator) repository.
+
 ## [Optional] Configure Weights & Biases
 This repo uses [Weights & Biases](https://wandb.ai) for experiment tracking, but offers an alternative
 in case you do not want to use it. By default W&B logging is disabled via the `default_wandb_mode: disabled`
