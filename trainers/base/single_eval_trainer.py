@@ -1,12 +1,9 @@
-import os
-
-from initializers.resume_initializer import ResumeInitializer
 from loggers.base.logger_base import LoggerBase
 from trainers import trainer_from_kwargs
-from utils.checkpoint import Checkpoint
 from utils.factory import create
 from .trainer_base import TrainerBase
 from .trainer_interface import TrainerInterface
+
 
 # TODO very similar to EvalTrainer
 class SingleEvalTrainer(TrainerInterface):

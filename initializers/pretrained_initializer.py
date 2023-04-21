@@ -1,6 +1,9 @@
-import torch
-from .base.initializer_base import InitializerBase
 from pathlib import Path
+
+import torch
+
+from .base.initializer_base import InitializerBase
+
 
 class PretrainedInitializer(InitializerBase):
     def __init__(self, weights_file, **kwargs):

@@ -1,13 +1,13 @@
 import kappaprofiler as kp
-from torch.nn.functional import binary_cross_entropy_with_logits, cross_entropy
-
-from utils.object_from_kwargs import objects_from_kwargs
-from .base.sgd_trainer import SgdTrainer
-from losses.bce_loss import bce_loss
-from losses import loss_fn_from_kwargs
-from utils.factory import create
 from kappadata import LabelSmoothingWrapper
 from losses.soft_target_cross_entropy_loss import soft_target_cross_entropy_loss
+from torch.nn.functional import cross_entropy
+
+from losses import loss_fn_from_kwargs
+from losses.bce_loss import bce_loss
+from utils.factory import create
+from utils.object_from_kwargs import objects_from_kwargs
+from .base.sgd_trainer import SgdTrainer
 
 
 class ClassificationTrainer(SgdTrainer):

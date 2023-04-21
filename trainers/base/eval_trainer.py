@@ -104,7 +104,6 @@ class EvalTrainer(TrainerInterface):
         for ckpt in ckpts:
             self.logger.info(f"- {ckpt}")
 
-
         for ckpt in ckpts:
             # start logger dataloaders
             LoggerBase.call_start_dataloader_iterators(loggers)

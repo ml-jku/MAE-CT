@@ -6,7 +6,7 @@ vars:
 account_name: MAE-CT
 
 # path to store logs/checkpoints
-output_path: ??? 
+output_path: ???
 # path where pretrained models are stored
 # model_path: <MODEL_PATH>
 

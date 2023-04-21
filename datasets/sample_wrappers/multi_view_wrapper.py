@@ -1,8 +1,8 @@
 import einops
 import torch
+from datasets.transforms import transform_from_kwargs, transform_collate_fn
 from kappadata import KDWrapper
 
-from datasets.transforms import transform_from_kwargs, transform_collate_fn
 from utils.factory import create_collection
 
 
@@ -53,4 +53,3 @@ class MultiViewWrapper(KDWrapper):
     def to_split_view(self, x):
         """ transform [batch_size * n_views, ...] to [batch_size, n_views, ...] """
         return einops.rearrange(x, "(v b) ... -> b v ...", v=self.n_views)
-

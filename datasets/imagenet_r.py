@@ -1,5 +1,6 @@
 from .image_net import ImageNet
 
+
 class ImageNetR(ImageNet):
     IN1K_TO_INR = [
         1, 2, 4, 6, 8, 9, 11, 13, 22, 23, 26, 29, 31, 39, 47, 63, 71, 76, 79, 84, 90, 94, 96, 97, 99, 100, 105, 107,

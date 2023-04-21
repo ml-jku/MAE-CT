@@ -1,19 +1,18 @@
 # python eval_probe_mlp.py --encoder ".../save/probe/1olzsp2o/checkpoints/backbone_head.backbone cp=last model.th" --head ".../save/probe/1olzsp2o/checkpoints/backbone_head.head.cls_sgd_01_wupcos_default cp=last model.th" --device 0
-import torch.nn as nn
+import os
 from argparse import ArgumentParser
-from pathlib import Path
-from torchvision.datasets import ImageFolder
-from torchvision.transforms import Compose, Resize, CenterCrop, InterpolationMode, Normalize, ToTensor
+
+import torch
 from timm.data.constants import IMAGENET_DEFAULT_MEAN, IMAGENET_DEFAULT_STD
 from torch.utils.data import DataLoader
-import torch
 from torchmetrics.functional.classification import multiclass_accuracy
+from torchvision.datasets import ImageFolder
+from torchvision.transforms import Compose, Resize, CenterCrop, InterpolationMode, Normalize, ToTensor
 from tqdm import tqdm
-from models.vit.vit_mae import VitMae
-from models.vit.masked_encoder import MaskedEncoder
+
 from models.heads.linear_head import LinearHead
 from models.poolings import SinglePooling
-import os
+from models.vit.masked_encoder import MaskedEncoder
 
 
 def parse_args():
@@ -87,7 +86,6 @@ def main(root, encoder, head, device, disable_flash_attention, precision):
     ).item()
     print(f"accuracy: {acc:.4f}")
     print(f"accuracy: {acc:.8f}")
-
 
 
 if __name__ == "__main__":

@@ -26,7 +26,6 @@ class StagePathProvider:
     def stage_model_path(self):
         return self.model_path
 
-
     def get_stage_output_path(self, stage_name: str, stage_id: str, mkdir=True) -> Path:
         stage_output_path = self.output_path / stage_name / stage_id
         return self._mkdir(stage_output_path) if mkdir else stage_output_path

@@ -1,21 +1,17 @@
 # python eval_knn_mlp.py --encoder ".../models/ibot_vitb_rand_teacher.pth" --device 0
-import torch.nn as nn
+import os
 from argparse import ArgumentParser
 from pathlib import Path
-from torchvision.datasets import ImageFolder
-from torchvision.transforms import Compose, Resize, CenterCrop, InterpolationMode, Normalize, ToTensor
+
+import torch
 from timm.data.constants import IMAGENET_DEFAULT_MEAN, IMAGENET_DEFAULT_STD
 from torch.utils.data import DataLoader
-import torch
-from torchmetrics.functional.classification import multiclass_accuracy
+from torchvision.datasets import ImageFolder
+from torchvision.transforms import Compose, Resize, CenterCrop, InterpolationMode, Normalize, ToTensor
 from tqdm import tqdm
-from models.vit.vit_mae import VitMae
-from models.vit.masked_encoder import MaskedEncoder
-from models.heads.linear_head import LinearHead
-from models.poolings import SinglePooling
-import os
-from pathlib import Path
+
 from metrics.functional.knn import knn_metrics
+from models.vit.masked_encoder import MaskedEncoder
 
 
 def parse_args():
@@ -84,7 +80,7 @@ def main(root, encoder, device, disable_flash_attention, precision):
         train_y.append(y.clone())
     train_x = torch.concat(train_x)
     train_y = torch.concat(train_y)
-    
+
     print(f"extract test features (precision={precision} disable_flash_attention={disable_flash_attention})")
     test_x = []
     test_y = []
@@ -101,7 +97,6 @@ def main(root, encoder, device, disable_flash_attention, precision):
     acc = accuracies[0]
     print(f"accuracy: {acc:.4f}")
     print(f"accuracy: {acc:.8f}")
-
 
 
 if __name__ == "__main__":

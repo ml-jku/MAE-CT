@@ -1,11 +1,10 @@
-import torch
 import kappaprofiler as kp
-from torch.nn.functional import binary_cross_entropy_with_logits, cross_entropy
+import torch
 
+from models.vit.mask_generators.random_mask_generator import RandomMaskGenerator
 from utils.object_from_kwargs import objects_from_kwargs
 from .base.sgd_trainer import SgdTrainer
-from losses.bce_loss import bce_loss
-from models.vit.mask_generators.random_mask_generator import RandomMaskGenerator
+
 
 class MaeContheadsVitForwardTrainer(SgdTrainer):
     def __init__(self, forward_kwargs=None, disable_backward=None, **kwargs):

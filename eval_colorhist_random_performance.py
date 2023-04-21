@@ -3,27 +3,19 @@
 # g: 0.01179442647844553
 # b: 0.012775475159287453
 # overall: 0.012038691900670528
-import einops
-import torch.nn as nn
+import os
 from argparse import ArgumentParser
 from pathlib import Path
-from torchvision.datasets import ImageFolder
-from torchvision.transforms import Compose, Resize, CenterCrop, InterpolationMode, Normalize, ToTensor
-from timm.data.constants import IMAGENET_DEFAULT_MEAN, IMAGENET_DEFAULT_STD
-from torch.utils.data import DataLoader, Subset
+
 import torch
-from torchmetrics.functional.classification import multiclass_accuracy
-from tqdm import tqdm
-from models.vit.vit_mae import VitMae
-from models.vit.masked_encoder import MaskedEncoder
-from models.heads.linear_head import LinearHead
-from models.poolings import SinglePooling
-import os
-from models.extractors.vit_block_extractor import VitBlockExtractor
-from losses.functional.color_histogram_losses import color_histogram_regression_loss
-from torch.nn.functional import l1_loss
 from kappadata import color_histogram
-import matplotlib.pyplot as plt
+from torch.nn.functional import l1_loss
+from torch.utils.data import DataLoader
+from torchvision.datasets import ImageFolder
+from torchvision.transforms import Compose, Resize, CenterCrop, InterpolationMode, ToTensor
+from tqdm import tqdm
+
+from losses.functional.color_histogram_losses import color_histogram_regression_loss
 
 
 def parse_args():
@@ -74,8 +66,6 @@ def main(root, device, perfect_prediction):
     print(f"g: {losses[:, 1].mean()}")
     print(f"b: {losses[:, 2].mean()}")
     print(f"overall: {losses.mean()}")
-
-
 
 
 if __name__ == "__main__":

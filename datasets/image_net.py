@@ -1,7 +1,5 @@
 from pathlib import Path
 
-import yaml
-
 from datasets.base.image_folder import ImageFolder
 
 
