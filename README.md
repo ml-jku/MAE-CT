@@ -4,6 +4,8 @@ Pytorch implementation of **M**asked **A**uto**E**ncoder **C**ontrastive **T**un
 from our paper <br/>
 [Contrastive Tuning: A Little Help to Make Masked Autoencoders Forget](https://arxiv.org/abs/2304.10520).
 
+![](https://github.com/ml-jku/MAE-CT/blob/06326017fa605a9b650da36b1f63dd0376e4bd28/.github/lowshot_aug_L.svg)
+
 This repository provides:
 
 - Pretrained checkpoints for 
