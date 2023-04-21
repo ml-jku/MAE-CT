@@ -1,7 +1,8 @@
 # MAE-CT: Masked Autoencoder Contrastive Tuning
 
 Pytorch implementation of **M**asked **A**uto**E**ncoder **C**ontrastive **T**uning (MAE-CT)
-from our paper [Contrastive Tuning: A Little Help to Make Masked Autoencoders Forget](https://arxiv.org/abs/2304.10520).
+from our paper <br/>
+[Contrastive Tuning: A Little Help to Make Masked Autoencoders Forget](https://arxiv.org/abs/2304.10520).
 
 This repository provides:
 
@@ -27,8 +28,8 @@ This repository provides:
 |Encoder|Pretrain|Probing|k-NN|
 |:---:|:---:|:---:|:---:|
 |[ViT-B/16](https://ml.jku.at/research/maect/download/maect_base16.th)|[hp](https://github.com/ml-jku/MAE-CT/blob/06326017fa605a9b650da36b1f63dd0376e4bd28/yamls/maect/base16.yaml)|73.5|64.1|
-|[ViT-L/16](https://ml.jku.at/research/maect/download/maect_base16.th)|[hp](https://github.com/ml-jku/MAE-CT/blob/06326017fa605a9b650da36b1f63dd0376e4bd28/yamls/maect/large16.yaml)|80.2|78.0|
-|[ViT-H/16](https://ml.jku.at/research/maect/download/maect_base16.th)|[hp](https://github.com/ml-jku/MAE-CT/blob/06326017fa605a9b650da36b1f63dd0376e4bd28/yamls/maect/huge16.yaml)|81.5|79.4|
+|[ViT-L/16](https://ml.jku.at/research/maect/download/maect_large16.th)|[hp](https://github.com/ml-jku/MAE-CT/blob/06326017fa605a9b650da36b1f63dd0376e4bd28/yamls/maect/large16.yaml)|80.2|78.0|
+|[ViT-H/16](https://ml.jku.at/research/maect/download/maect_huge16.th)|[hp](https://github.com/ml-jku/MAE-CT/blob/06326017fa605a9b650da36b1f63dd0376e4bd28/yamls/maect/huge16.yaml)|81.5|79.4|
 
 ## MAE-CT<sub>*aug*</sub>
 
@@ -117,7 +118,7 @@ Tutorial will be up shortly.
 
 # Citation
 
-If you find this repository useful, please consider giving it a :star: and cite us
+If you find this repository useful, please consider giving it a star :star: and cite us
 
 ```
 @article{lehner2023maect,
