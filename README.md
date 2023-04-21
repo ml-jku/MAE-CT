@@ -3,6 +3,12 @@
 Pytorch implementation of **M**asked **A**uto**E**ncoder **C**ontrastive **T**uning (MAE-CT) 
 from our paper [Contrastive Tuning: A Little Help to Make Masked Autoencoders Forget](https://arxiv.org/abs/2304.10520).
 
+This repository provides:
+- Pretrained checkpoints for [MAE](https://github.com/ml-jku/MAE-CT#mae-reimplementation), [MAE-CT](https://github.com/ml-jku/MAE-CT#mae-ct) and [MAE-CT<sub>*aug*</sub>](https://github.com/ml-jku/MAE-CT#mae-ctaug)
+- All hyperparameters for reproducability
+- Instructions to generate low-shot datasets for evaluation
+- Instructions on how to use our models as backbone for arbitrary downstream tasks (coming soon)
+
 
 # Pretrained Checkpoints
 
@@ -89,19 +95,23 @@ The yamls used for our paper can be found [here](https://github.com/ml-jku/MAE-C
 Each step of MAE-CT requires its own yaml file where the later steps require a reference to a checkpoint of a previous
 step. This can be defined by changing the `stage_id` of the `initializer` objects within the yaml.
 
-## Example
-Pretrain an MAE on 8 GPUs:
+## Examples
+### Use Pretrained models
 
-`python main_train.py --hp yamls/mae/base16.yaml --devices 0,1,2,3,4,5,6,7`
+Tutorial will be up shortly
 
+### Train models
+- Pretrain an MAE on 8 GPUs: <br/>
+  `python main_train.py --hp yamls/mae/base16.yaml --devices 0,1,2,3,4,5,6,7`
+- An example to train a NNCLR head on frozen encoder features will be up soon.
+- Apply contrastive tuning on 8 GPUs (change the `stage_id` value of encoder and nnclr head `initializer` in the yaml 
+  file to the `stage_id` of your previous step): <br/>
+  `python main_train.py --hp yamls/maect/base16.yaml --devices 0,1,2,3,4,5,6,7`
 
-An example to train a NNCLR head on frozen encoder features will be up soon.
+### Evaluate pretrained models
 
+Tutorial will be up shortly.
 
-Apply contrastive tuning on 8 GPUs 
-(change the `stage_id` value of the yaml file to the `stage_id` of your previous step):
-
-`python main_train.py --hp yamls/maect/base16.yaml --devices 0,1,2,3,4,5,6,7`
 
 # Citation
 If you find this repository useful, please consider giving it a :star: and cite us
