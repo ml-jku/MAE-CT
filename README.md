@@ -11,26 +11,26 @@ from our paper [Contrastive Tuning: A Little Help to Make Masked Autoencoders Fo
 
 |Encoder|Pretrain|Probing|k-NN|
 |:---:|:---:|:---:|:---:|
-|ViT-B/16|[hp](https://github.com/ml-jku/MAE-CT/blob/750abc0f329b44d0a326d585ca7792d5ed50b767/yamls/mae/base16.yaml)|66.7|51.1|
-|ViT-L/16|[hp](https://github.com/ml-jku/MAE-CT/blob/750abc0f329b44d0a326d585ca7792d5ed50b767/yamls/mae/large16.yaml)|75.9|60.6|
-|ViT-H/16|[hp](https://github.com/ml-jku/MAE-CT/blob/750abc0f329b44d0a326d585ca7792d5ed50b767/yamls/mae/huge16.yaml)|78.0|61.1|
+|ViT-B/16|[hp](https://github.com/ml-jku/MAE-CT/blob/06326017fa605a9b650da36b1f63dd0376e4bd28/yamls/mae/base16.yaml)|66.7|51.1|
+|ViT-L/16|[hp](https://github.com/ml-jku/MAE-CT/blob/06326017fa605a9b650da36b1f63dd0376e4bd28/yamls/mae/large16.yaml)|75.9|60.6|
+|ViT-H/16|[hp](https://github.com/ml-jku/MAE-CT/blob/06326017fa605a9b650da36b1f63dd0376e4bd28/yamls/mae/huge16.yaml)|78.0|61.1|
 
 
 ## MAE-CT
 
 |Encoder|Pretrain|Probing|k-NN|
 |:---:|:---:|:---:|:---:|
-|ViT-B/16|[hp](https://github.com/ml-jku/MAE-CT/blob/750abc0f329b44d0a326d585ca7792d5ed50b767/yamls/maect/base16.yaml)|73.5|64.1|
-|ViT-L/16|[hp](https://github.com/ml-jku/MAE-CT/blob/750abc0f329b44d0a326d585ca7792d5ed50b767/yamls/maect/large16.yaml)|80.2|78.0|
-|ViT-H/16|[hp](https://github.com/ml-jku/MAE-CT/blob/750abc0f329b44d0a326d585ca7792d5ed50b767/yamls/maect/huge16.yaml)|81.5|79.4|
+|ViT-B/16|[hp](https://github.com/ml-jku/MAE-CT/blob/06326017fa605a9b650da36b1f63dd0376e4bd28/yamls/maect/base16.yaml)|73.5|64.1|
+|ViT-L/16|[hp](https://github.com/ml-jku/MAE-CT/blob/06326017fa605a9b650da36b1f63dd0376e4bd28/yamls/maect/large16.yaml)|80.2|78.0|
+|ViT-H/16|[hp](https://github.com/ml-jku/MAE-CT/blob/06326017fa605a9b650da36b1f63dd0376e4bd28/yamls/maect/huge16.yaml)|81.5|79.4|
 
 ## MAE-CT<sub>*aug*</sub>
 
 |Encoder|Pretrain|Probing|k-NN|
 |:---:|:---:|:---:|:---:|
-|ViT-B/16|[hp](https://github.com/ml-jku/MAE-CT/blob/750abc0f329b44d0a326d585ca7792d5ed50b767/yamls/maect/base16.yaml)|73.5|64.1|
-|ViT-L/16|[hp](https://github.com/ml-jku/MAE-CT/blob/750abc0f329b44d0a326d585ca7792d5ed50b767/yamls/maect/large16.yaml)|80.2|78.0|
-|ViT-H/16|[hp](https://github.com/ml-jku/MAE-CT/blob/750abc0f329b44d0a326d585ca7792d5ed50b767/yamls/maect/huge16.yaml)|81.5|79.4|
+|ViT-B/16|[hp](https://github.com/ml-jku/MAE-CT/blob/06326017fa605a9b650da36b1f63dd0376e4bd28/yamls/maect/base16.yaml)|73.5|64.1|
+|ViT-L/16|[hp](https://github.com/ml-jku/MAE-CT/blob/06326017fa605a9b650da36b1f63dd0376e4bd28/yamls/maect/large16.yaml)|80.2|78.0|
+|ViT-H/16|[hp](https://github.com/ml-jku/MAE-CT/blob/06326017fa605a9b650da36b1f63dd0376e4bd28/yamls/maect/huge16.yaml)|81.5|79.4|
 
 
 
