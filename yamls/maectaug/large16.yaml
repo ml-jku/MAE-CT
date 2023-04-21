@@ -5,52 +5,52 @@ datasets:
     version: imagenet1k
     split: train
     sample_wrappers:
-    - kind: multi_view_wrapper
-      transforms:
-      - - interpolation: bicubic
-          kind: kd_random_resized_crop
-          scale:
-          - 0.08
-          - 1.0
-          size: 224
-        - kind: kd_random_horizontal_flip
-        - brightness: 0.4
-          contrast: 0.4
-          hue: 0.1
-          kind: kd_random_color_jitter
-          p: 0.8
-          saturation: 0.2
-        - kind: kd_gaussian_blur_pil
-          sigma:
-          - 0.1
-          - 2.0
-        - kind: kd_random_grayscale
-          p: 0.2
-        - kind: kd_image_net_norm
-      - - interpolation: bicubic
-          kind: kd_random_resized_crop
-          scale:
-          - 0.08
-          - 1.0
-          size: 224
-        - kind: kd_random_horizontal_flip
-        - brightness: 0.4
-          contrast: 0.4
-          hue: 0.1
-          kind: kd_random_color_jitter
-          p: 0.8
-          saturation: 0.2
-        - kind: kd_random_gaussian_blur_pil
-          p: 0.1
-          sigma:
-          - 0.1
-          - 2.0
-        - kind: kd_random_grayscale
-          p: 0.2
-        - kind: kd_random_solarize
-          p: 0.2
-          threshold: 128
-        - kind: kd_image_net_norm
+      - kind: multi_view_wrapper
+        transforms:
+          - - interpolation: bicubic
+              kind: kd_random_resized_crop
+              scale:
+                - 0.08
+                - 1.0
+              size: 224
+            - kind: kd_random_horizontal_flip
+            - brightness: 0.4
+              contrast: 0.4
+              hue: 0.1
+              kind: kd_random_color_jitter
+              p: 0.8
+              saturation: 0.2
+            - kind: kd_gaussian_blur_pil
+              sigma:
+                - 0.1
+                - 2.0
+            - kind: kd_random_grayscale
+              p: 0.2
+            - kind: kd_image_net_norm
+          - - interpolation: bicubic
+              kind: kd_random_resized_crop
+              scale:
+                - 0.08
+                - 1.0
+              size: 224
+            - kind: kd_random_horizontal_flip
+            - brightness: 0.4
+              contrast: 0.4
+              hue: 0.1
+              kind: kd_random_color_jitter
+              p: 0.8
+              saturation: 0.2
+            - kind: kd_random_gaussian_blur_pil
+              p: 0.1
+              sigma:
+                - 0.1
+                - 2.0
+            - kind: kd_random_grayscale
+              p: 0.2
+            - kind: kd_random_solarize
+              p: 0.2
+              threshold: 128
+            - kind: kd_image_net_norm
 model:
   kind: mae_contheads_vit
   encoder:
@@ -63,34 +63,34 @@ model:
       kind: adamw
       lr: 0.0001
       betas:
-      - 0.9
-      - 0.95
+        - 0.9
+        - 0.95
       weight_decay: 0.05
       param_group_modifiers:
-      - decay: 0.65
-        kind: layerwise_lr_decay_modifier
+        - decay: 0.65
+          kind: layerwise_lr_decay_modifier
       schedule:
-      - end_percent: 20
-        exclude_first: true
-        exclude_last: true
-        kind: linear_increasing
-      - exclude_last: true
-        kind: cosine_decreasing
+        - end_percent: 20
+          exclude_first: true
+          exclude_last: true
+          kind: linear_increasing
+        - exclude_last: true
+          kind: cosine_decreasing
     freezers:
-    - kind: vit_block_freezer
-      block_idxs:
-      - 0
-      - 1
-      - 2
-      - 3
-      - 4
-      - 5
-      - 6
-      - 7
-      - 8
-      - 9
-      - 10
-      - 11
+      - kind: vit_block_freezer
+        block_idxs:
+          - 0
+          - 1
+          - 2
+          - 3
+          - 4
+          - 5
+          - 6
+          - 7
+          - 8
+          - 9
+          - 10
+          - 11
     initializer:
       checkpoint: last
       kind: previous_run_initializer
@@ -111,16 +111,16 @@ model:
         kind: adamw
         lr: 0.0005
         betas:
-        - 0.9
-        - 0.95
+          - 0.9
+          - 0.95
         weight_decay: 1.0e-05
         schedule:
-        - end_percent: 20
-          exclude_first: true
-          exclude_last: true
-          kind: linear_increasing
-        - exclude_last: true
-          kind: cosine_decreasing
+          - end_percent: 20
+            exclude_first: true
+            exclude_last: true
+            kind: linear_increasing
+          - exclude_last: true
+            kind: cosine_decreasing
       pooling:
         kind: class_token
       initializer:
@@ -140,17 +140,17 @@ trainer:
   normalize_pixels: true
   log_every_n_epochs: 1
   loggers:
-  - kind: group_update_output_logger
-    every_n_samples: 65536
-    pattern: nn_accuracy
-  - kind: group_update_output_logger
-    every_n_epochs: 1
-    pattern: nn_accuracy
-  - kind: checkpoint_logger
-    every_n_epochs: 1
-  - kind: ema_logger
-    every_n_epochs: 1
-    model_paths:
-    - encoder
-    target_factors:
-    - 0.9999
+    - kind: group_update_output_logger
+      every_n_samples: 65536
+      pattern: nn_accuracy
+    - kind: group_update_output_logger
+      every_n_epochs: 1
+      pattern: nn_accuracy
+    - kind: checkpoint_logger
+      every_n_epochs: 1
+    - kind: ema_logger
+      every_n_epochs: 1
+      model_paths:
+        - encoder
+      target_factors:
+        - 0.9999

@@ -1,4 +1,4 @@
-from torch.nn.functional import binary_cross_entropy_with_logits, cross_entropy
+from torch.nn.functional import binary_cross_entropy_with_logits
 
 
 def bce_loss(preds, target, **kwargs):

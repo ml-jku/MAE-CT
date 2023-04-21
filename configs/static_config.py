@@ -1,11 +1,11 @@
 import logging
 from pathlib import Path
+from typing import Optional
 
 import kappaconfig as kc
 
 from distributed.config import is_distributed, is_managed, get_world_size, get_local_rank
 from .wandb_config import WandbConfig
-from typing import Optional
 
 
 class StaticConfig:

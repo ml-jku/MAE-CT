@@ -1,16 +1,9 @@
-from collections import defaultdict
-from functools import partial
-
 import torch
 
-from distributed.gather import all_gather_nograd_clipped
-from .base.multi_dataset_logger import MultiDatasetLogger
-from utils.factory import create_collection
-from models.extractors import extractor_from_kwargs
-from datasets.image_net import ImageNet
+from distributed.config import is_rank0
 from initializers.base.checkpoint_initializer import CheckpointInitializer
 from utils.subset_identifier import get_subset_identifier
-from distributed.config import is_rank0
+from .base.multi_dataset_logger import MultiDatasetLogger
 
 
 class OfflineLabelLogger(MultiDatasetLogger):

@@ -2,6 +2,7 @@ from kappadata import SubsetWrapper
 # TODO import from kappadata
 from kappadata.wrappers.dataset_wrappers.classwise_subset_wrapper import ClasswiseSubsetWrapper
 
+
 def get_subset_identifier(dataset):
     result = None
     for wrapper in dataset.all_wrappers:

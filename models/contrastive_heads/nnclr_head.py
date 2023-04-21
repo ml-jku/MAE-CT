@@ -6,11 +6,10 @@ from .nnclr_noqueue_head import NnclrNoqueueHead
 
 
 class NnclrHead(NnclrNoqueueHead):
-    def __init__(self, local_scaling_knn=0, topk = 0,**kwargs):
+    def __init__(self, local_scaling_knn=0, topk=0, **kwargs):
         super().__init__(**kwargs)
         self.local_scaling_knn = local_scaling_knn
         self.topk = topk
-
 
     def _get_loss(self, outputs, idx, y):
         projected0 = outputs["view0"]["projected"]
@@ -26,8 +25,8 @@ class NnclrHead(NnclrNoqueueHead):
         _, nn1 = self.find_nn(normed_projected1, ids=idx, topk=self.topk)
 
         # nn is calculated with no_grad so gradient only flows back through 'predicted'
-        loss0 = nnclr_loss_fn(predicted0, nn1, temperature=self.temperature, transposed = self.transposed)
-        loss1 = nnclr_loss_fn(predicted1, nn0, temperature=self.temperature, transposed = self.transposed)
+        loss0 = nnclr_loss_fn(predicted0, nn1, temperature=self.temperature, transposed=self.transposed)
+        loss1 = nnclr_loss_fn(predicted1, nn0, temperature=self.temperature, transposed=self.transposed)
         loss = (loss0 + loss1) / 2
 
         nn_acc = self.calculate_nn_accuracy(normed_projected0, ids=idx, y=y, idx0=idx0, nn0=nn0)

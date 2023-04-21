@@ -5,17 +5,17 @@ datasets:
     version: imagenet1k
     split: train
     x_transform:
-    - interpolation: bicubic
-      kind: random_resized_crop
-      scale:
-      - 0.2
-      - 1.0
-      size: 224
-    - kind: random_horizontal_flip
-    - kind: kd_image_net_norm
+      - interpolation: bicubic
+        kind: random_resized_crop
+        scale:
+          - 0.2
+          - 1.0
+        size: 224
+      - kind: random_horizontal_flip
+      - kind: kd_image_net_norm
     sample_wrappers:
-    - kind: multi_view_wrapper
-      n_views: 2
+      - kind: multi_view_wrapper
+        n_views: 2
 model:
   kind: mae_contheads_vit
   encoder:
@@ -29,16 +29,16 @@ model:
       lr: 0.00015
       weight_decay: 0.05
       betas:
-      - 0.9
-      - 0.95
+        - 0.9
+        - 0.95
       schedule:
-      - end_checkpoint:
-          epoch: 20
-        exclude_first: true
-        exclude_last: true
-        kind: linear_increasing
-      - exclude_last: true
-        kind: cosine_decreasing
+        - end_checkpoint:
+            epoch: 20
+          exclude_first: true
+          exclude_last: true
+          kind: linear_increasing
+        - exclude_last: true
+          kind: cosine_decreasing
   decoder:
     kind: vit.masked_decoder
     kwargs:
@@ -50,16 +50,16 @@ model:
       lr: 0.00015
       weight_decay: 0.05
       betas:
-      - 0.9
-      - 0.95
+        - 0.9
+        - 0.95
       schedule:
-      - end_checkpoint:
-          epoch: 20
-        exclude_first: true
-        exclude_last: true
-        kind: linear_increasing
-      - exclude_last: true
-        kind: cosine_decreasing
+        - end_checkpoint:
+            epoch: 20
+          exclude_first: true
+          exclude_last: true
+          kind: linear_increasing
+        - exclude_last: true
+          kind: cosine_decreasing
 trainer:
   kind: mae_contheads_vit_trainer
   max_epochs: 800
@@ -71,5 +71,5 @@ trainer:
   normalize_pixels: true
   log_every_n_epochs: 1
   loggers:
-  - kind: checkpoint_logger
-    every_n_epochs: 50
+    - kind: checkpoint_logger
+      every_n_epochs: 50

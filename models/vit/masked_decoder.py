@@ -17,11 +17,11 @@ from ..base.single_model_base import SingleModelBase
 class MaskedDecoder(SingleModelBase):
     def __init__(
             self,
-            patch_size, 
-            embedding_dim, 
-            depth, 
-            attention_heads, 
-            n_aux_tokens, 
+            patch_size,
+            embedding_dim,
+            depth,
+            attention_heads,
+            n_aux_tokens,
             mask_generator=None,
             use_aux_tokens=True,
             detach_aux_tokens=False,
@@ -146,7 +146,7 @@ class MaskedDecoder(SingleModelBase):
 
         # predictor projection
         x = self.pred(x)
-        
+
         if self.use_aux_tokens:
             # remove aux token
             x = x[:, self.n_aux_tokens:, :]

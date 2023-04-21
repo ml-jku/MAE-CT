@@ -1,7 +1,6 @@
 import kappaconfig as kc
 
 from .testrun_constants import TEST_RUN_EFFECTIVE_BATCH_SIZE, TEST_RUN_UPDATES_PER_EPOCH
-from utils.param_checking import to_2tuple
 
 
 class MinDataPostProcessor(kc.Processor):

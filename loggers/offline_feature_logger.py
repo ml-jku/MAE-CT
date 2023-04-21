@@ -1,17 +1,12 @@
-from collections import defaultdict
 from functools import partial
 
 import torch
-
-from distributed.gather import all_gather_nograd_clipped
-from .base.multi_dataset_logger import MultiDatasetLogger
-from utils.factory import create_collection
-from models.extractors import extractor_from_kwargs
-from datasets.image_net import ImageNet
-from initializers.base.checkpoint_initializer import CheckpointInitializer
-from utils.subset_identifier import get_subset_identifier
-from distributed.config import is_rank0
 from kappadata import ModeWrapper
+
+from distributed.config import is_rank0
+from models.extractors import extractor_from_kwargs
+from utils.factory import create_collection
+from .base.multi_dataset_logger import MultiDatasetLogger
 
 
 class OfflineFeatureLogger(MultiDatasetLogger):
@@ -40,7 +35,7 @@ class OfflineFeatureLogger(MultiDatasetLogger):
 
     # noinspection PyMethodOverriding
     def _log(self, update_counter, model, trainer, train_dataset, **_):
-        #assert trainer.precision == torch.float32
+        # assert trainer.precision == torch.float32
         # setup
         for extractor in self.extractors:
             extractor.enable_hooks()

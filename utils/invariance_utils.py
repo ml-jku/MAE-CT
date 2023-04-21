@@ -1,5 +1,5 @@
-import torch
 from torch.nn.functional import softmax
+
 
 # Method to calculate the invariance of the latent space representations
 # Eq.6 in https://openreview.net/pdf?id=SCD0hn3kMHw
@@ -13,7 +13,7 @@ def calc_geed_cosine(features_no_aug, feature_dict_augs):
     d = features_no_aug.shape[0]
     # Calculate the normalization constant M
     features_no_aug = features_no_aug / \
-        features_no_aug.norm(dim=1, keepdim=True)
+                      features_no_aug.norm(dim=1, keepdim=True)
     sim = features_no_aug @ features_no_aug.T
     m_norm = sim.triu(diagonal=1).sum() * 2 / (d ** 2 - d)
     avg_sim_in_aug = []

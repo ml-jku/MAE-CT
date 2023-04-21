@@ -1,17 +1,17 @@
-from tqdm import tqdm
 from collections import defaultdict
 
 import kappaprofiler as kp
 import numpy as np
 import torch
+from tqdm import tqdm
 
+from distributed.config import is_managed
 from distributed.gather import all_gather_nograd
 from distributed.gather import all_gather_nograd_clipped
 from utils.formatting_util import list_to_string
 from utils.naming_util import snake_type_name
-from .logger_base import LoggerBase
-from distributed.config import is_managed
 from utils.noop_tqdm import NoopTqdm
+from .logger_base import LoggerBase
 
 
 # TODO MultiDatasetLogger and DatasetLogger are very similar (MultiDatasetLogger should be able to disable prefetching (e.g. for EmbeddingProjectorLogger)
@@ -96,7 +96,7 @@ class MultiDatasetLogger(LoggerBase):
                 self._collate_result(result, dataset_len=len(loader.dataset))
                 for result in zip(*forward_results)
             ]
-            
+
             if single_output:
                 return collated[0]
         else:

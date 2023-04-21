@@ -2,10 +2,9 @@ import numpy as np
 import torch
 import torch.nn as nn
 
+from initializers.trunc_normal_initializer import TruncNormalInitializer
 from models.base.single_model_base import SingleModelBase
 from models.poolings import pooling_from_kwargs
-from utils.factory import create
-from initializers.trunc_normal_initializer import TruncNormalInitializer
 
 
 class LinearHead(SingleModelBase):

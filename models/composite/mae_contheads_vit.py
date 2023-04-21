@@ -1,5 +1,4 @@
 import kappaprofiler as kp
-import torch
 import torch.nn as nn
 from torch.nn.functional import normalize
 

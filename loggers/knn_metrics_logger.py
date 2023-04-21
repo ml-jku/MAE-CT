@@ -1,20 +1,15 @@
-import einops
-import math
 from functools import partial
 
-import torch.nn.functional as F
 from kappadata import ModeWrapper
-
-from loggers.base.multi_dataset_logger import MultiDatasetLogger
-from models.extractors import extractor_from_kwargs
-from utils.factory import create_collection
-from utils.formatting_util import dict_to_string
-from collections import defaultdict
-from utils.object_from_kwargs import objects_from_kwargs
-from metrics.functional.knn import knn_metrics
 from metrics.functional.auprc import auprc
 from torchmetrics.functional.classification import binary_auroc
 
+from loggers.base.multi_dataset_logger import MultiDatasetLogger
+from metrics.functional.knn import knn_metrics
+from models.extractors import extractor_from_kwargs
+from utils.factory import create_collection
+from utils.formatting_util import dict_to_string
+from utils.object_from_kwargs import objects_from_kwargs
 
 
 class KnnMetricsLogger(MultiDatasetLogger):
@@ -123,7 +118,6 @@ class KnnMetricsLogger(MultiDatasetLogger):
                         self.writer.add_scalar(f"knn_auprc/{key}", test_auprc, update_counter=update_counter)
                         logger_info_dict[f"knn_auroc/{key}"] = test_auroc
                         logger_info_dict[f"knn_auprc/{key}"] = test_auprc
-
 
         # cleanup
         for extractor in self.extractors:

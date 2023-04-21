@@ -113,7 +113,6 @@ class DatasetLogger(LoggerBase):
         else:
             return self._collate_result(forward_results)
 
-
     @property
     def dataset(self):
         return self.data_container.get_dataset(self.dataset_key)

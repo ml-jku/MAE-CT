@@ -1,11 +1,11 @@
-import torch.nn
-
-from .functional.color_histogram_losses import color_histogram_regression_loss, color_histogram_ce_loss
-from torch.nn.functional import l1_loss
 from functools import partial
-from .base.color_histogram_loss import ColorHistogramLoss
-from utils.factory import create
+
+from torch.nn.functional import l1_loss
+
 from losses import loss_fn_from_kwargs
+from utils.factory import create
+from .base.color_histogram_loss import ColorHistogramLoss
+from .functional.color_histogram_losses import color_histogram_regression_loss
 
 
 class ColorHistogramRegressionLoss(ColorHistogramLoss):
@@ -16,5 +16,3 @@ class ColorHistogramRegressionLoss(ColorHistogramLoss):
     @property
     def loss_fn(self):
         return partial(color_histogram_regression_loss, loss_fn=l1_loss)
-
-

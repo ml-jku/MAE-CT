@@ -1,7 +1,8 @@
 import torch
-from .base.pooling_base import PoolingBase
-from utils.factory import create
+
 from models.poolings import pooling_from_kwargs
+from .base.pooling_base import PoolingBase
+
 
 class ExtractorPooling(PoolingBase):
     def __init__(self, keys, pooling=None, **kwargs):
@@ -16,5 +17,3 @@ class ExtractorPooling(PoolingBase):
             pooled = self.pooling(feature, ctx=ctx)
             features.append(pooled)
         return torch.concat(features, dim=1)
-
-

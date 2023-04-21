@@ -1,8 +1,9 @@
+from collections import defaultdict
+
 import numpy as np
 
-from utils.infer_higher_is_better import higher_is_better_from_metric_key
 from .base.stage_summarizer_base import StageSummarizerBase
-from collections import defaultdict
+
 
 class LogregSummarizer(StageSummarizerBase):
     def summarize(self):

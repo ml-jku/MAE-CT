@@ -62,7 +62,6 @@ class VitMae(SingleModelBase):
             raise NotImplementedError
         self.pos_drop = nn.Dropout(p=dropout)
 
-
         # many MAE implementations don't use a CLS token
         self.n_aux_tokens = 0
         if cls_token:

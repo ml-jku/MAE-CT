@@ -1,8 +1,9 @@
 import torch
+from torch.nn.functional import normalize
+
+from losses.nnclr_loss import nnclr_loss_fn
 from utils.model_utils import update_ema, copy_params
 from .nnclr_head import NnclrHead
-from torch.nn.functional import normalize
-from losses.nnclr_loss import nnclr_loss_fn
 
 
 class NnclrEmaOracleHead(NnclrHead):
@@ -53,8 +54,8 @@ class NnclrEmaOracleHead(NnclrHead):
         _, nn1 = self.find_nn(normed_projected1, ids=idx, y=y)
 
         # nn is calculated with no_grad so gradient only flows back through 'predicted'
-        loss0 = nnclr_loss_fn(predicted0, nn1, temperature=self.temperature, transposed = self.transposed)
-        loss1 = nnclr_loss_fn(predicted1, nn0, temperature=self.temperature, transposed = self.transposed)
+        loss0 = nnclr_loss_fn(predicted0, nn1, temperature=self.temperature, transposed=self.transposed)
+        loss1 = nnclr_loss_fn(predicted1, nn0, temperature=self.temperature, transposed=self.transposed)
         loss = (loss0 + loss1) / 2
 
         nn_acc = self.calculate_nn_accuracy(normed_projected0, ids=idx, y=y, idx0=idx0_orig, nn0=nn0_orig)
@@ -76,8 +77,8 @@ class NnclrEmaOracleHead(NnclrHead):
             n = similarity_matrix.shape[0]
             candidate_idx = similarity_matrix.topk(self.topk, dim=1)[1]
             dice = torch.randint(size=(n,), high=self.topk)
-            idx = candidate_idx[torch.arange(n),dice]
-        #idx = similarity_matrix.max(dim=1)[1]
+            idx = candidate_idx[torch.arange(n), dice]
+        # idx = similarity_matrix.max(dim=1)[1]
         nearest_neighbor = self.queue[idx]
         if retrieve_idx_orig:
             return idx, nearest_neighbor, idx_original, nearest_neighbor_original

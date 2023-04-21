@@ -7,13 +7,15 @@ import torch.distributed as dist
 def is_slurm_run():
     return "SLURM_PROCID" in os.environ and "SLURM_NTASKS_PER_NODE" in os.environ
 
+
 def is_mpi_managed_run():
     return (
-        "OMPI_COMM_WORLD_SIZE" in os.environ and
-        "OMPI_COMM_WORLD_RANK" in os.environ and
-        "OMPI_COMM_WORLD_LOCAL_RANK" in os.environ and
-        "OMPI_MCA_orte_num_nodes" in os.environ
+            "OMPI_COMM_WORLD_SIZE" in os.environ and
+            "OMPI_COMM_WORLD_RANK" in os.environ and
+            "OMPI_COMM_WORLD_LOCAL_RANK" in os.environ and
+            "OMPI_MCA_orte_num_nodes" in os.environ
     )
+
 
 def is_custom_managed_run():
     return (

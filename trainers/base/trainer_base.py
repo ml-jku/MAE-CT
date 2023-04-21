@@ -2,9 +2,9 @@ from functools import partial
 
 import kappaprofiler as kp
 import torch
+from kappadata import KDMultiViewWrapper
 from torch.distributed import all_gather_object
 
-from kappadata import KDMultiViewWrapper
 from datasets.sample_wrappers.multi_view_wrapper import MultiViewWrapper
 from distributed.config import is_distributed, get_world_size
 from distributed.distributed_data_parallel import DistributedDataParallel
@@ -241,7 +241,6 @@ class TrainerBase(TrainerInterface):
         if is_distributed():
             self.logger.info(f"effective_batch_size_per_device: {effective_batch_size_per_device}")
             self.logger.info(f"world_size: {get_world_size()}")
-
 
         if self.max_batch_size is None:
             # calculate max_batch_size

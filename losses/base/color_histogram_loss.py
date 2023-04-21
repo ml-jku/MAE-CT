@@ -1,5 +1,6 @@
 import torch
 
+
 class ColorHistogramLoss(torch.nn.Module):
     def __init__(self, bins: int, temperature: float = 1., reduction="mean"):
         super().__init__()

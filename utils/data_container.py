@@ -1,17 +1,17 @@
 import logging
 from functools import partial
 
-import numpy as np
 import kappadata as kd
+import numpy as np
 from kappadata import ModeWrapper, KDComposeCollator, SubsetWrapper, ShuffleWrapper
 from pytorch_concurrent_dataloader import DataLoader as ConcurrentDataloader
 from torch.utils.data import DistributedSampler, DataLoader, RandomSampler, SequentialSampler
 
+from datasets.dummy_dataset import DummyDataset
 from distributed.config import is_distributed, get_world_size
 from providers.config_providers.noop_config_provider import NoopConfigProvider
 from utils.infinite_batch_sampler import InfiniteBatchSampler
 from utils.num_worker_heuristic import get_num_workers, get_total_cpu_count, get_num_fetch_workers
-from datasets.dummy_dataset import DummyDataset
 
 
 class DataContainer:

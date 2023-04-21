@@ -1,5 +1,6 @@
 from .image_net import ImageNet
 
+
 class ImageNetA(ImageNet):
     IN1K_TO_INA = [
         6, 11, 13, 15, 17, 22, 23, 27, 30, 37, 39, 42, 47, 50, 57, 70, 71, 76, 79, 89, 90, 94, 96, 97, 99, 105, 107,

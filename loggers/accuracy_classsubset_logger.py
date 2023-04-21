@@ -1,12 +1,8 @@
-from collections import defaultdict
 from functools import partial
 
-import torch
 from torchmetrics.functional.classification import multiclass_accuracy
 
 from .base.multi_dataset_logger import MultiDatasetLogger
-from distributed.gather import all_gather_nograd_clipped
-from .base.dataset_logger import DatasetLogger
 
 
 class AccuracyClasssubsetLogger(MultiDatasetLogger):
@@ -62,4 +58,3 @@ class AccuracyClasssubsetLogger(MultiDatasetLogger):
                 self.logger.info(f"{key}: {acc:.4f}")
                 logger_info_dict[key] = acc
                 self.writer.add_scalar(key, acc, update_counter=update_counter)
-

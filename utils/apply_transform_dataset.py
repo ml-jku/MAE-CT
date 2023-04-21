@@ -1,5 +1,6 @@
 from torch.utils.data import Dataset
 
+
 class ApplyTransformDataset(Dataset):
     """
     helper dataset to apply a transform in parallel fashion to some data

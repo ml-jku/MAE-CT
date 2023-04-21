@@ -2,9 +2,9 @@ import torch
 from kappadata import ModeWrapper, KDMixWrapper
 from kappadata.utils.class_counts import get_class_counts
 
-from loggers.base.summary_logger import SummaryLogger
 from datasets.imagenet_a import ImageNetA
 from datasets.imagenet_r import ImageNetR
+from loggers.base.summary_logger import SummaryLogger
 
 
 class DatasetStatsLogger(SummaryLogger):
@@ -80,4 +80,4 @@ class DatasetStatsLogger(SummaryLogger):
                 self.logger.info(f"{nonzero_counts[i]} {nonzero_counts[i] / len(classes) * 100:.2f}% {class_name}")
         self.logger.info(f"each class has at least {counts.min()} samples")
         self.logger.info(f"each class has at most {counts.max()} samples")
-        #self.logger.info(f"each class has on average {counts.float().mean()} samples")
+        # self.logger.info(f"each class has on average {counts.float().mean()} samples")

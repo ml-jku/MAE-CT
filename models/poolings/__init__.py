@@ -1,12 +1,15 @@
+from copy import deepcopy
+
 import torch.nn as nn
 
 from models.poolings.single_pooling import SinglePooling
 from utils.factory import instantiate
-from copy import deepcopy
+
 
 class IdentityPooling:
     def __call__(self, x, ctx):
         return x
+
 
 # TODO not sure why here pooling is required instead of kind
 def pooling_from_kwargs(pooling, **kwargs):
@@ -20,7 +23,6 @@ def pooling_from_kwargs(pooling, **kwargs):
     if kind.startswith("extractor"):
         return instantiate(module_names=[f"models.poolings.{kind}"], type_names=[kind], **pooling, **kwargs)
     return SinglePooling(kind, **pooling, **kwargs)
-
 
 
 def pooling2d_from_kwargs(kind, factor):

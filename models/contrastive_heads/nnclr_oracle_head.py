@@ -32,7 +32,6 @@ class NnclrOracleHead(NnclrNoqueueHead):
         nn_acc = self.calculate_nn_accuracy(normed_projected0, ids=idx, y=y, idx0=idx0_orig, nn0=nn0_orig)
         return loss, dict(nn_accuracy=nn_acc)
 
-
     @torch.no_grad()
     def find_nn(self, normed_projected, ids, y, retrieve_idx_orig=False):
         similarity_matrix = self.get_queue_similarity_matrix(normed_projected, ids=ids)

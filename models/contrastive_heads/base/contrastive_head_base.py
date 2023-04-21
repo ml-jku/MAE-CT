@@ -130,7 +130,7 @@ class ContrastiveHeadBase(SingleModelBase):
             n = similarity_matrix.shape[0]
             candidate_idx = similarity_matrix.topk(topk, dim=1)[1]
             dice = torch.randint(size=(n,), high=topk)
-            idx = candidate_idx[torch.arange(n),dice]
+            idx = candidate_idx[torch.arange(n), dice]
         nearest_neighbor = self.queue[idx]
         return idx, nearest_neighbor
 

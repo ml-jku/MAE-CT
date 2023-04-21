@@ -1,8 +1,10 @@
-from collections import defaultdict
-import torch
 import math
-import torch.nn.functional as F
+from collections import defaultdict
+
 import einops
+import torch
+import torch.nn.functional as F
+
 
 # TODO split multiclass/binary into seperate methods
 # TODO automatic batchsize
@@ -53,7 +55,6 @@ def knn_metrics(
     # calculate in chunks to avoid OOM
     n_chunks = math.ceil(len(test_y) / (batch_size or len(test_y)))
 
-
     for test_x_chunk, test_y_chunk in zip(test_x.chunk(n_chunks), test_y.chunk(n_chunks)):
         # the purity comparison (test_y_chunk == nn_labels) actually works without this but do this anyways
         # to avoid weird errors with shape broadcasting
@@ -97,7 +98,6 @@ def knn_metrics(
             if n_classes <= 2:
                 score = logits[:, 1] - logits[:, 0]
                 scores[knn].append(score)
-
 
     # counts to percent (and convert to primitive type)
     accuracies = {knn: (v / len(test_y)).item() for knn, v in accuracies.items()}

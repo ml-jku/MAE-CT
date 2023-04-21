@@ -1,26 +1,21 @@
-import einops
 from collections import defaultdict
 from functools import partial
-from torch.utils.data import DataLoader
-from losses.bce_loss import bce_loss
 
+import einops
 import numpy as np
 import torch
 from kappadata import ModeWrapper
-from torch.nn.functional import cross_entropy
-from torchmetrics.functional.classification import multiclass_accuracy, binary_accuracy, binary_auroc
+from kappadata import get_norm_transform
 
-from distributed.gather import all_reduce_mean_grad, all_gather_nograd
+from distributed.gather import all_reduce_mean_grad
 from loggers.base.dataset_logger import DatasetLogger
+from losses import loss_fn_from_kwargs
 from models import model_from_kwargs
 from models.extractors import extractor_from_kwargs
+from utils.factory import create
 from utils.factory import create_collection
 from utils.formatting_util import float_to_scientific_notation
-from utils.select_with_path import select_with_path
-from metrics.functional.auprc import auprc
-from kappadata import get_norm_transform
-from losses import loss_fn_from_kwargs
-from utils.factory import create
+
 
 class OnlineProbeColorHistogramLogger(DatasetLogger):
     def __init__(self, extractors, models, loss_function, **kwargs):
@@ -144,7 +139,6 @@ class OnlineProbeColorHistogramLogger(DatasetLogger):
                 #         mean_loss,
                 #         update_counter=update_counter,
                 #     )
-
 
     def _forward(self, batch, model, trainer):
         batch_without_ctx, _ = batch  # remove ctx

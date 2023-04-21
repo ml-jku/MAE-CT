@@ -1,5 +1,4 @@
 import kappaconfig as kc
-from kappaconfig.entities.wrappers import KCScalar
 
 
 class MinDataPreProcessor(kc.Processor):

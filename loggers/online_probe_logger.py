@@ -1,22 +1,20 @@
 from collections import defaultdict
 from functools import partial
-from torch.utils.data import DataLoader
-from losses.bce_loss import bce_loss
 
 import numpy as np
 import torch
 from kappadata import ModeWrapper
+from metrics.functional.auprc import auprc
 from torch.nn.functional import cross_entropy
-from torchmetrics.functional.classification import multiclass_accuracy, binary_accuracy, binary_auroc
+from torchmetrics.functional.classification import multiclass_accuracy, binary_auroc
 
 from distributed.gather import all_reduce_mean_grad, all_gather_nograd
 from loggers.base.dataset_logger import DatasetLogger
+from losses.bce_loss import bce_loss
 from models import model_from_kwargs
 from models.extractors import extractor_from_kwargs
 from utils.factory import create_collection
 from utils.formatting_util import float_to_scientific_notation
-from utils.select_with_path import select_with_path
-from metrics.functional.auprc import auprc
 
 
 class OnlineProbeLogger(DatasetLogger):
@@ -228,7 +226,7 @@ class OnlineProbeLogger(DatasetLogger):
                 self.writer.add_scalar(key, test_acc, update_counter=update_counter)
             else:
                 prediction = prediction.squeeze(1)
-                #test_acc = binary_accuracy(preds=prediction, target=classes)
+                # test_acc = binary_accuracy(preds=prediction, target=classes)
                 if (classes == 0).sum() == 0 or (classes == 1).sum() == 0:
                     test_auroc = 1.
                     test_auprc = 1.
@@ -240,9 +238,9 @@ class OnlineProbeLogger(DatasetLogger):
                     test_auroc = binary_auroc(preds=prediction, target=classes)
                     test_auprc = auprc(preds=prediction, target=classes)
                 key = f"onlineprobe/{extractor_model_name}/{self.dataset_key}/{prediction_name}"
-                #self.logger.info(f"accuracy/{key}: {test_acc:.4f}")
+                # self.logger.info(f"accuracy/{key}: {test_acc:.4f}")
                 self.logger.info(f"auroc/{key}: {test_auroc:.4f}")
                 self.logger.info(f"auprc/{key}: {test_auprc:.4f}")
-                #self.writer.add_scalar(f"accuracy/{key}", test_acc, update_counter=update_counter)
+                # self.writer.add_scalar(f"accuracy/{key}", test_acc, update_counter=update_counter)
                 self.writer.add_scalar(f"auroc/{key}", test_auroc, update_counter=update_counter)
                 self.writer.add_scalar(f"auprc/{key}", test_auprc, update_counter=update_counter)

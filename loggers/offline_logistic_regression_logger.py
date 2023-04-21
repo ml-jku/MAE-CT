@@ -1,16 +1,11 @@
 import os
-from collections import defaultdict
 
 import torch
-import torch.nn as nn
 
-from distributed.config import is_rank0, barrier
-from distributed.gather import all_gather_nograd_clipped
-from models.poolings.single_pooling import SinglePooling
-from utils.factory import create_collection
+from distributed.config import is_rank0
 from utils.stdout_capturer import StdoutCapturer
 from .base.logger_base import LoggerBase
-from utils.subset_identifier import get_subset_identifier
+
 
 class OfflineLogisticRegressionLogger(LoggerBase):
     def __init__(self, train_dataset_key, test_dataset_key, features_name, stage_id, **kwargs):

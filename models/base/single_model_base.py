@@ -3,11 +3,11 @@ import torch
 from freezers import freezer_from_kwargs
 from initializers import initializer_from_kwargs
 from initializers.functional import ALL_BATCHNORMS
+from models.extractors import extractor_from_kwargs
 from optimizers import optim_ctor_from_kwargs
 from utils.factory import create, create_collection
 from utils.model_utils import get_trainable_param_count
 from .model_base import ModelBase
-from models.extractors import extractor_from_kwargs
 
 
 class SingleModelBase(ModelBase):

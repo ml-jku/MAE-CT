@@ -1,7 +1,4 @@
-import torch.nn as nn
-
 from models import model_from_kwargs
-from models.poolings import pooling_from_kwargs
 from utils.factory import create
 from utils.model_utils import get_output_shape_of_model
 from ..base.composite_model_base import CompositeModelBase

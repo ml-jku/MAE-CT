@@ -2,10 +2,10 @@ from functools import partial
 
 import torch
 import torch.nn.functional as F
+from utils.multi_crop_utils import multi_crop_loss
 
 from distributed.config import get_rank
 from distributed.gather import all_gather_grad
-from utils.multi_crop_utils import multi_crop_loss
 from utils.nnclr_util import find_nn
 
 
@@ -46,8 +46,6 @@ def nnclr_loss_fn(predicted, nn, temperature, transposed=False):
     # normed_nn = F.normalize(nn, dim=-1)
     normed_nn = nn
     normed_predicted = F.normalize(predicted, dim=-1)
-
-
 
     rank = get_rank()
     if transposed:

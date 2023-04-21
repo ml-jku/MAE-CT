@@ -1,8 +1,7 @@
 import einops
 import torch
-from torch.nn.functional import mse_loss
 from kappadata import color_histogram
-from functools import partial
+from torch.nn.functional import mse_loss
 
 
 def color_histogram_regression_loss(preds, images, bins, temperature=1., loss_fn=mse_loss, reduction="mean"):

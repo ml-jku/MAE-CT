@@ -2,10 +2,9 @@ from functools import partial
 
 import kappaprofiler as kp
 import torch
-
-from kappadata import KDMultiViewWrapper
-from datasets.sample_wrappers.multi_view_wrapper import MultiViewWrapper
 from datasets.transforms import transform_from_kwargs, transform_collate_fn
+
+from datasets.sample_wrappers.multi_view_wrapper import MultiViewWrapper
 from schedules import schedule_from_kwargs
 from utils.factory import create_collection
 from .mae_vit_trainer import MaeVitTrainer
@@ -30,8 +29,6 @@ class MaeContheadsVitTrainer(MaeVitTrainer):
     def forward(self, model, batch, train_dataset, mask_generator=None):
         outputs = {}
         (idx, x, y), ctx = batch
-
-
 
         # patch KDMultiViewWrapper
         if isinstance(x, list):

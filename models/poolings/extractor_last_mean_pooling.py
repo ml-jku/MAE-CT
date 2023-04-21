@@ -1,7 +1,8 @@
 import torch
-from .base.pooling_base import PoolingBase
-from utils.factory import create
+
 from models.poolings import pooling_from_kwargs
+from .base.pooling_base import PoolingBase
+
 
 class ExtractorLastMeanPooling(PoolingBase):
     """
@@ -9,6 +10,7 @@ class ExtractorLastMeanPooling(PoolingBase):
     this class will always use the last n_keys from the extractor
     by using this it can be avoided to write seperate yamls for ViT-B and ViT-L
     """
+
     def __init__(self, n_keys, pooling=None, **kwargs):
         super().__init__(**kwargs)
         self.n_keys = n_keys
