@@ -39,9 +39,9 @@ This repository provides:
 
 |Encoder|Pretrain|Probing|k-NN|
 |:---:|:---:|:---:|:---:|
-|[ViT-B/16](https://ml.jku.at/research/maect/download/maect_base16.th)|[hp](https://github.com/ml-jku/MAE-CT/blob/06326017fa605a9b650da36b1f63dd0376e4bd28/yamls/maect/base16.yaml)|73.5|64.1|
-|[ViT-L/16](https://ml.jku.at/research/maect/download/maect_large16.th)|[hp](https://github.com/ml-jku/MAE-CT/blob/06326017fa605a9b650da36b1f63dd0376e4bd28/yamls/maect/large16.yaml)|80.2|78.0|
-|[ViT-H/16](https://ml.jku.at/research/maect/download/maect_huge16.th)|[hp](https://github.com/ml-jku/MAE-CT/blob/06326017fa605a9b650da36b1f63dd0376e4bd28/yamls/maect/huge16.yaml)|81.5|79.4|
+|[ViT-B/16](https://ml.jku.at/research/maect/download/maect_base16.th)|[hp](https://github.com/ml-jku/MAE-CT/blob/06326017fa605a9b650da36b1f63dd0376e4bd28/yamls/maect/base16.yaml)|76.9|73.4|
+|[ViT-L/16](https://ml.jku.at/research/maect/download/maect_large16.th)|[hp](https://github.com/ml-jku/MAE-CT/blob/06326017fa605a9b650da36b1f63dd0376e4bd28/yamls/maect/large16.yaml)|81.5|79.1|
+|[ViT-H/16](https://ml.jku.at/research/maect/download/maect_huge16.th)|[hp](https://github.com/ml-jku/MAE-CT/blob/06326017fa605a9b650da36b1f63dd0376e4bd28/yamls/maect/huge16.yaml)|82.2|79.8|
 
 # Setup
 
@@ -49,8 +49,7 @@ Setup a conda environment: `conda env create --file environment_linux.yml --name
 
 We use [FlashAttention](https://github.com/HazyResearch/flash-attention)
 ([paper](https://arxiv.org/abs/2205.14135)) to greatly accelerate computations. We recommend to install it, but this
-repo can be used (without modification)
-without FlashAttention.
+repo can be also used without FlashAttention (without modification).
 
 ## Configuration of dataset paths and environment specific things
 
