@@ -108,7 +108,7 @@ Tutorial will be up shortly
 
 ### Train models
 
-- Pretrain an MAE on 8 GPUs: <br/>
+- Pretrain a MAE on 8 GPUs: <br/>
   `python main_train.py --hp yamls/mae/base16.yaml --devices 0,1,2,3,4,5,6,7`
 - An example to train a NNCLR head on frozen encoder features will be up soon.
 - Apply contrastive tuning on 8 GPUs (change the `stage_id` value of encoder and nnclr head `initializer` in the yaml
