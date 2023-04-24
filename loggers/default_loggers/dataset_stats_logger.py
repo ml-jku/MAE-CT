@@ -69,6 +69,8 @@ class DatasetStatsLogger(SummaryLogger):
             counts = torch.stack(classes).sum(dim=0)
         else:
             counts = get_class_counts(classes, n_classes)
+            if isinstance(counts, tuple):
+                counts = counts[0]
         nonzero_counts = counts[counts > 0]
         self.logger.info(f"{dataset_key} has {n_classes} classes ({len(nonzero_counts)} classes with samples)")
         if len(nonzero_counts) <= 10:
