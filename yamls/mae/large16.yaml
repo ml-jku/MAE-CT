@@ -6,7 +6,7 @@ datasets:
     split: train
     x_transform:
       - interpolation: bicubic
-        kind: random_resized_crop
+        kind: kd_random_resized_crop
         scale:
           - 0.2
           - 1.0

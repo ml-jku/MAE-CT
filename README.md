@@ -64,7 +64,7 @@ repo can be also used without FlashAttention (without modification).
 ## Configuration of dataset paths and environment specific things
 
 - `cp template_static_config.yaml static_config.yaml`
-- adjust values to your setup
+- edit values in `static_config.yaml` to your setup
 
 For low-shot evaluations, we use the official splits from
 [SimCLRv2](https://github.com/google-research/simclr/tree/master/imagenet_subsets)

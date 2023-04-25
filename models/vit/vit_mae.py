@@ -7,7 +7,6 @@ import torch.nn as nn
 from initializers.functional import initialize_layernorm_as_noaffine, initialize_linear_bias_to_zero
 from models.base.single_model_base import SingleModelBase
 from models.modules.batchnorm1d_vit import BatchNorm1dViT
-from models.modules.nonshared_patch_embed import NonsharedPatchEmbed
 from models.modules.patch_embed import PatchEmbed
 from models.modules.vit_block import VitBlock
 from models.modules.vit_conv_stem import ViTConvStem
@@ -53,8 +52,6 @@ class VitMae(SingleModelBase):
         patch_embed_kwargs = dict(img_size=(h, w), patch_size=self.patch_size, in_chans=c, embed_dim=embedding_dim)
         if patch_embed == "shared":
             self.patch_embed = PatchEmbed(**patch_embed_kwargs)
-        elif patch_embed == "nonshared":
-            self.patch_embed = NonsharedPatchEmbed(**patch_embed_kwargs)
         elif patch_embed == "conv":
             self.patch_embed = ViTConvStem(**patch_embed_kwargs)
             self.depth -= 1
@@ -141,11 +138,6 @@ class VitMae(SingleModelBase):
         if isinstance(self.patch_embed, PatchEmbed):
             w = self.patch_embed.proj.weight.data
             torch.nn.init.xavier_uniform_(w.view([w.shape[0], -1]))
-        elif isinstance(self.patch_embed, NonsharedPatchEmbed):
-            # NonsharedPatchEmbed has nn.Linear projection -> is initialized anyways in self._init_weights
-            # keep this here in case self._init_weights changes at some point
-            for proj in self.patch_embed.proj:
-                torch.nn.init.xavier_uniform_(proj.weight.data)
         # original impl doesnt initialize bias to zero
         # LEGACY: it should though (e.g. MoCoV3 uses it and it is inconsistent anyways)
         # torch.nn.init.zeros_(self.patch_embed.proj.bias)

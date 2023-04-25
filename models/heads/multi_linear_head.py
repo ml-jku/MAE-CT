@@ -4,7 +4,6 @@ import torch.nn as nn
 
 from models.base.composite_model_base import CompositeModelBase
 from .linear_head import LinearHead
-from .simclrv2_linear_head import Simclrv2LinearHead
 
 
 class MultiLinearHead(CompositeModelBase):
@@ -41,8 +40,6 @@ class MultiLinearHead(CompositeModelBase):
             )
             if head_kind == "heads.linear_head":
                 head_cls = LinearHead
-            elif head_kind == "heads.simclrv2_linear_head":
-                head_cls = Simclrv2LinearHead
             else:
                 raise NotImplementedError
             layer = head_cls(

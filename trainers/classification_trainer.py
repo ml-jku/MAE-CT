@@ -1,6 +1,5 @@
 import kappaprofiler as kp
 from kappadata import LabelSmoothingWrapper
-from losses.soft_target_cross_entropy_loss import soft_target_cross_entropy_loss
 from torch.nn.functional import cross_entropy
 
 from losses import loss_fn_from_kwargs
@@ -21,7 +20,7 @@ class ClassificationTrainer(SgdTrainer):
         if self._loss_function is None:
             ds = self.data_container.get_dataset("train")
             if ds.has_wrapper_type(LabelSmoothingWrapper):
-                self._loss_function = soft_target_cross_entropy_loss
+                raise NotImplementedError
             elif ds.n_classes > 1 and not ds.is_multiclass:
                 self._loss_function = cross_entropy
             else:

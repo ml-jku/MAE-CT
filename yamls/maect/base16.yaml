@@ -9,7 +9,7 @@ datasets:
           - n_views: 2
             transforms:
               - interpolation: bicubic
-                kind: random_resized_crop
+                kind: kd_random_resized_crop
                 scale:
                   - 0.08
                   - 1.0

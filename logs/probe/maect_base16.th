@@ -44,7 +44,7 @@ datasets:
     version: imagenet1k
     split: train
     x_transform:
-    - kind: random_resized_crop
+    - kind: kd_random_resized_crop
       size: 224
       scale:
       - 0.08
@@ -57,7 +57,7 @@ datasets:
     version: imagenet1k
     split: test
     x_transform:
-    - kind: resize
+    - kind: kd_resize
       size: 256
       interpolation: bicubic
     - kind: center_crop
