@@ -2,16 +2,14 @@ import os
 from argparse import ArgumentParser
 
 import torch
+import torch.nn as nn
 from timm.data.constants import IMAGENET_DEFAULT_MEAN, IMAGENET_DEFAULT_STD
+from timm.models import vit_base_patch16_224, vit_large_patch16_224, vit_huge_patch14_224
 from torch.utils.data import DataLoader
 from torchmetrics.functional.classification import multiclass_accuracy
 from torchvision.datasets import ImageFolder
 from torchvision.transforms import Compose, Resize, CenterCrop, InterpolationMode, Normalize, ToTensor
 from tqdm import tqdm
-
-from models.heads.linear_head import LinearHead
-from models.poolings import SinglePooling
-from models.vit.masked_encoder import MaskedEncoder
 
 
 def parse_args():
@@ -21,7 +19,7 @@ def parse_args():
     parser.add_argument("--head", type=str, required=True)
     parser.add_argument("--device", type=int, required=True)
     parser.add_argument("--precision", type=str, default="bfloat16", choices=["float32", "float16", "bfloat16"])
-    parser.add_argument("--pooling", type=str, default="class_token")
+    parser.add_argument("--pooling", type=str, default="token", choices=["token", "avg"])
     return vars(parser.parse_args())
 
 
@@ -44,43 +42,45 @@ def main(root, encoder, head, device, precision, pooling):
     encoder_sd = torch.load(encoder, map_location=torch.device("cpu"))
     if "state_dict" in encoder_sd:
         encoder_sd = encoder_sd["state_dict"]
-    embed_dim = encoder_sd["cls_token"].shape[2]
-    patch_size = encoder_sd["patch_embed.proj.weight"].shape[2]
-    if embed_dim == 768:
-        depth = 12
-        attention_heads = 12
-    elif embed_dim == 1024:
-        depth = 24
-        attention_heads = 16
-    elif embed_dim == 1280:
-        depth = 32
-        attention_heads = 16
+    dim = encoder_sd["pos_embed"].shape[2]
+    if dim == 768:
+        model = vit_base_patch16_224(use_fc_norm=False, global_pool=pooling)
+    elif dim == 1024:
+        model = vit_large_patch16_224(use_fc_norm=False, global_pool=pooling)
+    elif dim == 1280:
+        patch_size = encoder_sd["patch_embed.proj.weight"].shape[2]
+        if patch_size == 16:
+            model = vit_huge_patch14_224(use_fc_norm=False, global_pool=pooling, patch_size=16)
+        elif patch_size == 14:
+            model = vit_huge_patch14_224(use_fc_norm=False, global_pool=pooling)
+        else:
+            raise NotImplementedError
     else:
         raise NotImplementedError
-    encoder = MaskedEncoder(
-        input_shape=(3, 224, 224),
-        patch_size=patch_size,
-        embedding_dim=embed_dim,
-        depth=depth,
-        attention_heads=attention_heads,
-    )
-    encoder.load_state_dict(encoder_sd)
+
+    # timm ViT has a zero vector for the pos_embed of cls token
+    encoder_sd["pos_embed"] = torch.concat([torch.zeros(1, 1, model.embed_dim), encoder_sd["pos_embed"]], dim=1)
     print(f"initialize head ({head})")
-    print(f"pooling {pooling}")
     head_sd = torch.load(head, map_location=torch.device("cpu"))
     if "state_dict" in head_sd:
         head_sd = head_sd["state_dict"]
-    head = LinearHead(
-        input_shape=encoder.output_shape,
-        output_shape=(1000,),
-        nonaffine_batchnorm=True,
-        pooling=SinglePooling(kind=pooling),
-    )
-    head.load_state_dict(head_sd)
-    encoder = encoder.to(device)
-    head = head.to(device)
-    encoder.eval()
-    head.eval()
+    # patch head (probing heads use a non-affine batchnorm before the linear layer)
+    if "layer.1.running_mean" in head_sd:
+        model.head = nn.Sequential(
+            nn.BatchNorm1d(num_features=model.embed_dim, affine=False),
+            nn.Linear(model.embed_dim, model.num_classes),
+        )
+        encoder_sd["head.0.running_mean"] = head_sd["layer.1.running_mean"]
+        encoder_sd["head.0.running_var"] = head_sd["layer.1.running_var"]
+        encoder_sd["head.0.num_batches_tracked"] = head_sd["layer.1.num_batches_tracked"]
+        encoder_sd["head.1.weight"] = head_sd["layer.2.weight"]
+        encoder_sd["head.1.bias"] = head_sd["layer.2.bias"]
+    else:
+        encoder_sd["head.weight"] = head_sd["layer.2.weight"]
+        encoder_sd["head.bias"] = head_sd["layer.2.bias"]
+    model.load_state_dict(encoder_sd)
+    model = model.to(device)
+    model.eval()
 
     print(f"make predictions (precision={precision})")
     preds = []
@@ -88,7 +88,7 @@ def main(root, encoder, head, device, precision, pooling):
     for x, y in tqdm(DataLoader(dataset, batch_size=256, num_workers=10, pin_memory=True)):
         with torch.no_grad():
             with torch.autocast(str(device), dtype=getattr(torch, precision)):
-                preds.append(head(encoder.features(x.to(device))).cpu())
+                preds.append(model(x.to(device)).cpu())
         target.append(y.clone())
     preds = torch.concat(preds)
     target = torch.concat(target)
@@ -96,7 +96,7 @@ def main(root, encoder, head, device, precision, pooling):
     acc = multiclass_accuracy(
         preds=preds.to(device),
         target=target.to(device),
-        num_classes=head.output_shape[0],
+        num_classes=model.num_classes,
         average="micro",
     ).item()
     print(f"accuracy: {acc:.4f}")
