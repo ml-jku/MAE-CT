@@ -6,6 +6,7 @@ from kappadata import KDMultiViewWrapper
 from torch.distributed import all_gather_object
 
 from datasets.sample_wrappers.multi_view_wrapper import MultiViewWrapper
+from datasets.sample_wrappers.multi_crop_wrapper import MultiCropWrapper
 from distributed.config import is_distributed, get_world_size
 from distributed.distributed_data_parallel import DistributedDataParallel
 from distributed.gather import all_gather_nograd
@@ -74,7 +75,7 @@ class TrainerBase(TrainerInterface):
         sample = self.data_container.get_dataset(dataset_key, mode="x", return_ctx=True)[0][0]
         if isinstance(
                 self.data_container.get_dataset(dataset_key),
-                (KDMultiViewWrapper, MultiViewWrapper),
+                (KDMultiViewWrapper, MultiViewWrapper, MultiCropWrapper),
         ):
             return sample[0].shape
         return sample.shape
@@ -114,6 +115,17 @@ class TrainerBase(TrainerInterface):
             self.logger.info(
                 f"using effective_batch_size {view_adjusted_effective_batch_size} instead of "
                 f"{self.effective_batch_size} for initializing model (n_views={train_dataset.n_views})"
+            )
+        elif train_dataset.has_wrapper_type(MultiCropWrapper):
+            n_views = sum(train_dataset.views_per_transform)
+            assert n_views >= 2
+            if n_views > 2:
+                self.logger.warning("using multi crop -> not sure what lr scaling to apply with local crops using *2")
+            view_adjusted_effective_batch_size = self.effective_batch_size * 2
+            self.logger.info(
+                f"using effective_batch_size {view_adjusted_effective_batch_size} instead of "
+                f"{self.effective_batch_size} for initializing model "
+                f"(views_per_transform={train_dataset.views_per_transform})"
             )
         else:
             view_adjusted_effective_batch_size = self.effective_batch_size
