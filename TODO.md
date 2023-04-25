@@ -1,0 +1,4 @@
+- check env setup with fixed versions
+- timm script
+- k-NN
+- lowshot

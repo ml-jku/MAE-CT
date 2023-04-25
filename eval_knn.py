@@ -1,4 +1,3 @@
-# python eval_knn_mlp.py --encoder ".../models/ibot_vitb_rand_teacher.pth" --device 0
 import os
 from argparse import ArgumentParser
 from pathlib import Path
@@ -16,21 +15,18 @@ from models.vit.masked_encoder import MaskedEncoder
 
 def parse_args():
     parser = ArgumentParser()
-    parser.add_argument("--root", type=str, default=".../imagenet1k")
+    parser.add_argument("--root", type=str, default="/local00/bioinf/imagenet1k")
     parser.add_argument("--encoder", type=str, required=True)
     parser.add_argument("--device", type=int, required=True)
-    parser.add_argument("--disable_flash_attention", action="store_true")
     parser.add_argument("--precision", type=str, default="bfloat16", choices=["float32", "float16", "bfloat16"])
     return vars(parser.parse_args())
 
 
-def main(root, encoder, device, disable_flash_attention, precision):
+def main(root, encoder, device, precision):
     root = Path(root).expanduser()
     encoder = Path(encoder).expanduser()
     print(f"initialize dataset ({root})")
     os.environ["CUDA_VISIBLE_DEVICES"] = str(device)
-    if disable_flash_attention:
-        os.environ["DISABLE_FLASH_ATTENTION"] = "true"
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     transform = Compose([
         Resize(size=256, interpolation=InterpolationMode.BICUBIC),
@@ -45,10 +41,8 @@ def main(root, encoder, device, disable_flash_attention, precision):
 
     print(f"initialize encoder ({encoder})")
     encoder_sd = torch.load(encoder, map_location=torch.device("cpu"))
-    # MAE checkpoints
     if "model" in encoder_sd:
         encoder_sd = encoder_sd["model"]
-    # MLPlayground/IBOT checkpoints
     if "state_dict" in encoder_sd:
         encoder_sd = encoder_sd["state_dict"]
     dim, channels, patch_height, patch_width = encoder_sd["patch_embed.proj.weight"].shape
@@ -70,7 +64,7 @@ def main(root, encoder, device, disable_flash_attention, precision):
     encoder = encoder.to(device)
     encoder.eval()
 
-    print(f"extract train features (precision={precision} disable_flash_attention={disable_flash_attention})")
+    print(f"extract train features (precision={precision})")
     train_x = []
     train_y = []
     for x, y in tqdm(DataLoader(train_dataset, batch_size=256, num_workers=10, pin_memory=True)):
@@ -81,7 +75,7 @@ def main(root, encoder, device, disable_flash_attention, precision):
     train_x = torch.concat(train_x)
     train_y = torch.concat(train_y)
 
-    print(f"extract test features (precision={precision} disable_flash_attention={disable_flash_attention})")
+    print(f"extract test features (precision={precision})")
     test_x = []
     test_y = []
     for x, y in tqdm(DataLoader(test_dataset, batch_size=256, num_workers=10, pin_memory=True)):
@@ -92,11 +86,9 @@ def main(root, encoder, device, disable_flash_attention, precision):
     test_x = torch.concat(test_x)
     test_y = torch.concat(test_y)
 
-    print(f"calculate knn (knn=20)")
-    accuracies, _, _ = knn_metrics(train_x=train_x, test_x=test_x, train_y=train_y, test_y=test_y, knns=[20])
-    acc = accuracies[0]
-    print(f"accuracy: {acc:.4f}")
-    print(f"accuracy: {acc:.8f}")
+    print(f"calculate knn (knn=10)")
+    accuracies, _, _ = knn_metrics(train_x=train_x, test_x=test_x, train_y=train_y, test_y=test_y, knns=[10])
+    print(f"accuracy: {accuracies[0]:.4f}")
 
 
 if __name__ == "__main__":

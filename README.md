@@ -23,28 +23,32 @@ This repository provides:
 
 ## MAE reimplementation
 
-|Weights|Pretrain|Probing|k-NN|
-|:---:|:---:|:---:|:---:|
-|[ViT-B/16](https://ml.jku.at/research/maect/download/mae_reimpl_base16.th)|[hp](https://github.com/ml-jku/MAE-CT/blob/06326017fa605a9b650da36b1f63dd0376e4bd28/yamls/mae/base16.yaml)|66.7|51.1|
-|[ViT-L/16](https://ml.jku.at/research/maect/download/mae_reimpl_large16.th)|[hp](https://github.com/ml-jku/MAE-CT/blob/06326017fa605a9b650da36b1f63dd0376e4bd28/yamls/mae/large16.yaml)|75.9|60.6|
-|[ViT-H/16](https://ml.jku.at/research/maect/download/mae_reimpl_huge16.th)|[hp](https://github.com/ml-jku/MAE-CT/blob/06326017fa605a9b650da36b1f63dd0376e4bd28/yamls/mae/huge16.yaml)|78.0|61.1|
-|ViT-H/14|[original](https://github.com/facebookresearch/mae)|79.1|58.9|
+|Weights|Pretrain|Probe|Probe|k-NN|
+|:---:|:---:|:---:|:---:|:---:|
+|[ViT-B/16](https://ml.jku.at/research/maect/download/mae_reimpl_base16.th)|[hp](https://github.com/ml-jku/MAE-CT/blob/06326017fa605a9b650da36b1f63dd0376e4bd28/yamls/mae/base16.yaml)|66.7|log|51.1|
+|[ViT-L/16](https://ml.jku.at/research/maect/download/mae_reimpl_large16.th)|[hp](https://github.com/ml-jku/MAE-CT/blob/06326017fa605a9b650da36b1f63dd0376e4bd28/yamls/mae/large16.yaml)|75.9|log|60.6|
+|[ViT-H/16](https://ml.jku.at/research/maect/download/mae_reimpl_huge16.th)|[hp](https://github.com/ml-jku/MAE-CT/blob/06326017fa605a9b650da36b1f63dd0376e4bd28/yamls/mae/huge16.yaml)|78.0|log|61.1|
+|ViT-H/14|[original](https://github.com/facebookresearch/mae)|79.1|log|58.9|
 
 ## MAE-CT
 
-|Encoder|Pretrain|Probing|k-NN|
-|:---:|:---:|:---:|:---:|
-|[ViT-B/16](https://ml.jku.at/research/maect/download/maect_base16.th)|[hp](https://github.com/ml-jku/MAE-CT/blob/06326017fa605a9b650da36b1f63dd0376e4bd28/yamls/maect/base16.yaml)|73.5|64.1|
-|[ViT-L/16](https://ml.jku.at/research/maect/download/maect_large16.th)|[hp](https://github.com/ml-jku/MAE-CT/blob/06326017fa605a9b650da36b1f63dd0376e4bd28/yamls/maect/large16.yaml)|80.2|78.0|
-|[ViT-H/16](https://ml.jku.at/research/maect/download/maect_huge16.th)|[hp](https://github.com/ml-jku/MAE-CT/blob/06326017fa605a9b650da36b1f63dd0376e4bd28/yamls/maect/huge16.yaml)|81.5|79.4|
+|Encoder|Pretrain|Probe|Probe|k-NN|
+|:---:|:---:|:---:|:---:|:---:|
+|[ViT-B/16](https://ml.jku.at/research/maect/download/maect_base16.th)|[hp](https://github.com/ml-jku/MAE-CT/blob/06326017fa605a9b650da36b1f63dd0376e4bd28/yamls/maect/base16.yaml)|73.5|log|64.1|
+|[ViT-L/16](https://ml.jku.at/research/maect/download/maect_large16.th)|[hp](https://github.com/ml-jku/MAE-CT/blob/06326017fa605a9b650da36b1f63dd0376e4bd28/yamls/maect/large16.yaml)|80.2|log|78.0|
+|[ViT-H/16](https://ml.jku.at/research/maect/download/maect_huge16.th)|[hp](https://github.com/ml-jku/MAE-CT/blob/06326017fa605a9b650da36b1f63dd0376e4bd28/yamls/maect/huge16.yaml)|81.5|log|79.4|
 
 ## MAE-CT<sub>*aug*</sub>
 
-|Encoder|Pretrain|Probing|k-NN|
-|:---:|:---:|:---:|:---:|
-|[ViT-B/16](https://ml.jku.at/research/maect/download/maect_base16.th)|[hp](https://github.com/ml-jku/MAE-CT/blob/06326017fa605a9b650da36b1f63dd0376e4bd28/yamls/maect/base16.yaml)|76.9|73.4|
-|[ViT-L/16](https://ml.jku.at/research/maect/download/maect_large16.th)|[hp](https://github.com/ml-jku/MAE-CT/blob/06326017fa605a9b650da36b1f63dd0376e4bd28/yamls/maect/large16.yaml)|81.5|79.1|
-|[ViT-H/16](https://ml.jku.at/research/maect/download/maect_huge16.th)|[hp](https://github.com/ml-jku/MAE-CT/blob/06326017fa605a9b650da36b1f63dd0376e4bd28/yamls/maect/huge16.yaml)|82.2|79.8|
+|Encoder|Pretrain|Probe|Probe|k-NN|
+|:---:|:---:|:---:|:---:|:---:|
+|[ViT-B/16](https://ml.jku.at/research/maect/download/maect_base16.th)|[hp](https://github.com/ml-jku/MAE-CT/blob/06326017fa605a9b650da36b1f63dd0376e4bd28/yamls/maect/base16.yaml)|76.9|log|73.4|
+|[ViT-L/16](https://ml.jku.at/research/maect/download/maect_large16.th)|[hp](https://github.com/ml-jku/MAE-CT/blob/06326017fa605a9b650da36b1f63dd0376e4bd28/yamls/maect/large16.yaml)|81.5|log|79.1|
+|[ViT-H/16](https://ml.jku.at/research/maect/download/maect_huge16.th)|[hp](https://github.com/ml-jku/MAE-CT/blob/06326017fa605a9b650da36b1f63dd0376e4bd28/yamls/maect/huge16.yaml)|82.2|log|79.8|
+
+# Reproducability
+
+- We provide instructions for reproducing probing result in [PROBING.md](https://github.com/ml-jku/MAE-CT/blob/e5bc604d1d9003da823e6d832a5ad6762f6897c1/PROBING.md).
 
 # Setup
 

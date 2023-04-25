@@ -1,22 +1,17 @@
 import logging
 import sys
 
-import kappabenchmark
 import kappaconfig
 import kappadata
 import kappaprofiler
-import kappaschedules
 import packaging.version
 import pytorch_concurrent_dataloader
 import torch
 import torchmetrics
 
-expected_kappabenchmark = "0.0.8"
 expected_kappaconfig = "1.0.29"
 expected_kappadata = "1.0.99"
 expected_kappaprofiler = "1.0.9"
-expected_kappaschedules = "0.0.6"
-expected_pytorch_concurrent_dataloader = "0.0.7"
 # torchmetrics 0.11.0 is backward compatibility breaking
 # accuracy method requires task parameter or using multiclass_accuracy instead of just calling accuracy(pred, targets)
 # accuracy(task="multiclass", ...)
@@ -48,14 +43,7 @@ def check_versions(verbose):
         )
         log_fn(f"{pip_dependency_name} version: {actual_version}")
 
-    _check_pip_dependency(kappabenchmark.__version__, expected_kappabenchmark, "kappabenchmark")
     _check_pip_dependency(kappaconfig.__version__, expected_kappaconfig, "kappaconfig")
     _check_pip_dependency(kappadata.__version__, expected_kappadata, "kappadata")
     _check_pip_dependency(kappaprofiler.__version__, expected_kappaprofiler, "kappaprofiler")
-    _check_pip_dependency(kappaschedules.__version__, expected_kappaschedules, "kappaschedules")
-    _check_pip_dependency(
-        actual_version=pytorch_concurrent_dataloader.__version__,
-        expected_version=expected_pytorch_concurrent_dataloader,
-        pip_dependency_name="pytorch_concurrent_dataloader",
-    )
     _check_pip_dependency(torchmetrics.__version__, expected_torchmetrics_version, "torchmetrics")
