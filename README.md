@@ -18,7 +18,7 @@ This repository provides:
 - Linear probes trained on the respective checkpoints
 - All hyperparameters for reproducability
 - Instructions to generate low-shot datasets for evaluation
-- Instructions on how to use our models as backbone for arbitrary downstream tasks (coming soon)
+- Instructions on how to use our models as backbone
 
 # Pretrained Checkpoints
 
@@ -52,6 +52,13 @@ This repository provides:
 # Reproducability
 
 - We provide instructions for reproducing probing result in [PROBING.md](https://github.com/ml-jku/MAE-CT/blob/e5bc604d1d9003da823e6d832a5ad6762f6897c1/PROBING.md).
+
+# Use checkpoints as backbone for other tasks
+
+The script `eval_probe.py` demonstrates how one can load our models from a checkpoint and use it for a downstream task.
+The script extracts the features of the encoder and feeds it to a linear probe as task, but the code can be adjusted
+for other downstream tasks as well.
+
 
 # Setup
 
@@ -112,10 +119,6 @@ defined by changing the `stage_id` of the `initializer` objects within the yaml.
 
 ## Examples
 
-### Use Pretrained models
-
-Tutorial will be up shortly
-
 ### Train models
 
 - Pretrain a MAE on 8 GPUs: <br/>
@@ -127,7 +130,8 @@ Tutorial will be up shortly
 
 ### Evaluate pretrained models
 
-Tutorial will be up shortly.
+- Adapt the `initializer` of `yamls_probe.yaml` to the model you want to evaluate
+- `python main_train.py --hp yamls/probe.yaml --devices 0,1,2,3`
 
 # Citation
 
