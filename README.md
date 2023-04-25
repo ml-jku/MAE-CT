@@ -51,7 +51,10 @@ This repository provides:
 
 # Reproducability
 
-- We provide instructions for reproducing probing result in [PROBING.md](https://github.com/ml-jku/MAE-CT/blob/e5bc604d1d9003da823e6d832a5ad6762f6897c1/PROBING.md).
+- Models can be trained using the hyperparameters provided [here](https://github.com/ml-jku/MAE-CT/yamls). 
+  Examples to start training can be found [here](https://github.com/ml-jku/MAE-CT#train-models).
+- We provide instructions for reproducing our probing result in 
+  [PROBING.md](https://github.com/ml-jku/MAE-CT/blob/e5bc604d1d9003da823e6d832a5ad6762f6897c1/PROBING.md).
 
 # Use checkpoints as backbone for other tasks
 
