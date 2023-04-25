@@ -5,7 +5,7 @@ from our paper <br/>
 [Contrastive Tuning: A Little Help to Make Masked Autoencoders Forget](https://arxiv.org/abs/2304.10520).
 
 <p align="center">
-<img alt="lowshot_vitl" src="https://github.com/ml-jku/MAE-CT/blob/b65ad3105cd1e850b13d2bae5505f54da1b40dba/.github/lowshot_aug_L_white.svg">
+<img alt="lowshot_vitl" src="https://github.com/ml-jku/MAE-CT/blob/b65ad3105cd1e850b13d2bae5505f54da1b40dba/.github/schematic_contrastive_tuning.svg">
 </p>
 This repository provides:
 
