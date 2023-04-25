@@ -15,11 +15,13 @@ This repository provides:
   [MAE](https://github.com/ml-jku/MAE-CT#mae-reimplementation), 
   [MAE-CT](https://github.com/ml-jku/MAE-CT#mae-ct) and 
   [MAE-CT<sub>*aug*</sub>](https://github.com/ml-jku/MAE-CT#mae-ctaug)
+- Linear probes trained on the respective checkpoints
 - All hyperparameters for reproducability
 - Instructions to generate low-shot datasets for evaluation
 - Instructions on how to use our models as backbone for arbitrary downstream tasks (coming soon)
 
 # Pretrained Checkpoints
+
 
 ## MAE reimplementation
 
