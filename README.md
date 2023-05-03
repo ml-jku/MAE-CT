@@ -127,12 +127,15 @@ defined by changing the `stage_id` of the `initializer` objects within the yaml.
 
 ### Train models
 
-- Pretrain a MAE on 8 GPUs: <br/>
-  `python main_train.py --hp yamls/mae/base16.yaml --devices 0,1,2,3,4,5,6,7`
-- An example to train a NNCLR head on frozen encoder features will be up soon.
-- Apply contrastive tuning on 8 GPUs (in the yaml file, change the `stage_id` of the `initializer` the encoder and the nnclr head
-  to the `stage_id` of your previous step): <br/>
-  `python main_train.py --hp yamls/maect/base16.yaml --devices 0,1,2,3,4,5,6,7`
+- Pretrain a MAE on 8 GPUs (stage 1): <br/>
+  `python main_train.py --hp yamls/stage1_mae/large16.yaml --devices 0,1,2,3,4,5,6,7`
+- Train a NNCLR head on frozen encoder features (stage 2) with 8 GPUs:
+  - change the `stage_id` of the `initializer` in the encoder to the `stage_id` from stage 1
+  - `python main_train.py --hp yamls/stage2_maect_prepare_head/large16.yaml --devices 0,1,2,3,4,5,6,7`
+- Apply contrastive tuning (stage 3) with 8 GPUs:
+  - change the `stage_id` of the `initializer` in the encoder and the nnclr head to the `stage_id` from stage 2
+  - `python main_train.py --hp yamls/stage3_maect_contrastive_tuning/large16.yaml --devices 0,1,2,3,4,5,6,7`
+
 
 ### Evaluate pretrained models
 
