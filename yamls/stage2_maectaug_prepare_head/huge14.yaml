@@ -1,4 +1,4 @@
-stage_name: stage3
+stage_name: stage2
 datasets:
   train:
     kind: image_net
@@ -55,65 +55,30 @@ model:
   kind: mae_contheads_vit
   encoder:
     kind: vit.masked_encoder
-    patch_size: 16
+    patch_size: 14
     embedding_dim: 1280
     depth: 32
     attention_heads: 16
-    optim:
-      kind: adamw
-      lr: 0.0001
-      betas:
-        - 0.9
-        - 0.95
-      weight_decay: 0.05
-      param_group_modifiers:
-        - decay: 0.65
-          kind: layerwise_lr_decay_modifier
-      schedule:
-        - end_percent: 20
-          exclude_first: true
-          exclude_last: true
-          kind: linear_increasing
-        - exclude_last: true
-          kind: cosine_decreasing
-    freezers:
-      - kind: vit_block_freezer
-        block_idxs:
-          - 0
-          - 1
-          - 2
-          - 3
-          - 4
-          - 5
-          - 6
-          - 7
-          - 8
-          - 9
-          - 10
-          - 11
-          - 12
-          - 13
-          - 14
-          - 15
+    is_frozen: true
     initializer:
       checkpoint: last
       kind: previous_run_initializer
       model_name: mae_contheads_vit.encoder
       stage_id: ???
-      stage_name: stage2
+      stage_name: stage1
   contrastive_heads:
     nnclr:
-      kind: contrastive_heads.nnclr_ema_queue_head
+      kind: contrastive_heads.nnclr_queue_head
       proj_hidden_dim: 2048
       pred_hidden_dim: 4096
-      queue_size: 65536
       output_dim: 256
-      target_factor: 0.995
-      temperature: 0.35
-      topk: 20
+      queue_size: 65536
+      temperature: 0.15
+      pooling:
+        kind: class_token
       optim:
         kind: adamw
-        lr: 0.0005
+        lr: 0.0001
         betas:
           - 0.9
           - 0.95
@@ -125,17 +90,9 @@ model:
             kind: linear_increasing
           - exclude_last: true
             kind: cosine_decreasing
-      pooling:
-        kind: class_token
-      initializer:
-        checkpoint: last
-        kind: previous_run_initializer
-        model_name: mae_contheads_vit.head.nnclr
-        stage_id: ???
-        stage_name: stage2
 trainer:
   kind: mae_contheads_vit_trainer
-  max_epochs: 40
+  max_epochs: 20
   effective_batch_size: 512
   precision: bfloat16
   mask_generator:

@@ -55,7 +55,7 @@ model:
   kind: mae_contheads_vit
   encoder:
     kind: vit.masked_encoder
-    patch_size: 16
+    patch_size: 14
     embedding_dim: 1280
     depth: 32
     attention_heads: 16

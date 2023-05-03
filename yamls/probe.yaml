@@ -40,7 +40,8 @@ model:
 #      kind: previous_run_initializer
 #      model_name: mae_contheads_vit.encoder
 #      stage_id: 1gja1b6j
-#      stage_name: pretrain
+#      stage_name: stage3
+#      model_info: ema=0.9999
     # or from a weights file
     initializer:
       kind: pretrained_initializer

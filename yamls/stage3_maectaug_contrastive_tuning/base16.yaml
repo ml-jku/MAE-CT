@@ -1,4 +1,4 @@
-stage_name: stage2
+stage_name: stage3
 datasets:
   train:
     kind: image_net
@@ -89,8 +89,8 @@ model:
       checkpoint: last
       kind: previous_run_initializer
       model_name: mae_contheads_vit.encoder
-      stage_id: 149vuxm5
-      stage_name: stage_train_head
+      stage_id: ???
+      stage_name: stage2
   contrastive_heads:
     nnclr:
       kind: contrastive_heads.nnclr_ema_queue_head
@@ -121,8 +121,8 @@ model:
         checkpoint: last
         kind: previous_run_initializer
         model_name: mae_contheads_vit.head.nnclr
-        stage_id: 149vuxm5
-        stage_name: stage_train_head
+        stage_id: ???
+        stage_name: stage2
 trainer:
   kind: mae_contheads_vit_trainer
   max_epochs: 80

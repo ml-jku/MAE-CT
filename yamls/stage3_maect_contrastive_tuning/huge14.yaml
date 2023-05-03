@@ -5,57 +5,23 @@ datasets:
     version: imagenet1k
     split: train
     sample_wrappers:
-      - kind: multi_view_wrapper
-        transforms:
-          - - interpolation: bicubic
-              kind: kd_random_resized_crop
-              scale:
-                - 0.08
-                - 1.0
-              size: 224
-            - kind: kd_random_horizontal_flip
-            - brightness: 0.4
-              contrast: 0.4
-              hue: 0.1
-              kind: kd_random_color_jitter
-              p: 0.8
-              saturation: 0.2
-            - kind: kd_gaussian_blur_pil
-              sigma:
-                - 0.1
-                - 2.0
-            - kind: kd_random_grayscale
-              p: 0.2
-            - kind: kd_image_net_norm
-          - - interpolation: bicubic
-              kind: kd_random_resized_crop
-              scale:
-                - 0.08
-                - 1.0
-              size: 224
-            - kind: kd_random_horizontal_flip
-            - brightness: 0.4
-              contrast: 0.4
-              hue: 0.1
-              kind: kd_random_color_jitter
-              p: 0.8
-              saturation: 0.2
-            - kind: kd_random_gaussian_blur_pil
-              p: 0.1
-              sigma:
-                - 0.1
-                - 2.0
-            - kind: kd_random_grayscale
-              p: 0.2
-            - kind: kd_random_solarize
-              p: 0.2
-              threshold: 128
-            - kind: kd_image_net_norm
+      - kind: multi_crop_wrapper
+        transform_configs:
+          - n_views: 2
+            transforms:
+              - interpolation: bicubic
+                kind: kd_random_resized_crop
+                scale:
+                  - 0.08
+                  - 1.0
+                size: 224
+              - kind: kd_random_horizontal_flip
+              - kind: kd_image_net_norm
 model:
   kind: mae_contheads_vit
   encoder:
     kind: vit.masked_encoder
-    patch_size: 16
+    patch_size: 14
     embedding_dim: 1280
     depth: 32
     attention_heads: 16
@@ -77,8 +43,7 @@ model:
         - exclude_last: true
           kind: cosine_decreasing
     freezers:
-      - kind: vit_block_freezer
-        block_idxs:
+      - block_idxs:
           - 0
           - 1
           - 2
@@ -95,6 +60,7 @@ model:
           - 13
           - 14
           - 15
+        kind: vit_block_freezer
     initializer:
       checkpoint: last
       kind: previous_run_initializer
@@ -106,14 +72,16 @@ model:
       kind: contrastive_heads.nnclr_ema_queue_head
       proj_hidden_dim: 2048
       pred_hidden_dim: 4096
-      queue_size: 65536
       output_dim: 256
+      queue_size: 65536
+      temperature: 0.3
       target_factor: 0.995
-      temperature: 0.35
       topk: 20
+      pooling:
+        kind: class_token
       optim:
         kind: adamw
-        lr: 0.0005
+        lr: 0.0001
         betas:
           - 0.9
           - 0.95
@@ -125,8 +93,6 @@ model:
             kind: linear_increasing
           - exclude_last: true
             kind: cosine_decreasing
-      pooling:
-        kind: class_token
       initializer:
         checkpoint: last
         kind: previous_run_initializer
@@ -135,8 +101,8 @@ model:
         stage_name: stage2
 trainer:
   kind: mae_contheads_vit_trainer
-  max_epochs: 40
   effective_batch_size: 512
+  max_epochs: 30
   precision: bfloat16
   mask_generator:
     kind: random_mask_generator
@@ -144,8 +110,8 @@ trainer:
   normalize_pixels: true
   log_every_n_epochs: 1
   loggers:
-    - every_n_samples: 65536
-      kind: group_update_output_logger
+    - kind: group_update_output_logger
+      every_n_samples: 65536
       pattern: nn_accuracy
     - every_n_epochs: 1
       kind: group_update_output_logger
