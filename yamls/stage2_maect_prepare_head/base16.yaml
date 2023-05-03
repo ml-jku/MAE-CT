@@ -1,0 +1,83 @@
+stage_name: stage2
+datasets:
+  train:
+    kind: image_net
+    version: imagenet1k
+    split: train
+    sample_wrappers:
+      - kind: multi_crop_wrapper
+        transform_configs:
+          - n_views: 2
+            transforms:
+              - interpolation: bicubic
+                kind: kd_random_resized_crop
+                scale:
+                  - 0.08
+                  - 1.0
+                size: 224
+              - kind: kd_random_horizontal_flip
+              - kind: kd_image_net_norm
+model:
+  kind: mae_contheads_vit
+  encoder:
+    kind: vit.masked_encoder
+    patch_size: 16
+    embedding_dim: 768
+    depth: 12
+    attention_heads: 12
+    is_frozen: true
+    initializer:
+      checkpoint: last
+      kind: previous_run_initializer
+      model_name: mae_contheads_vit.encoder
+      stage_id: ???
+      stage_name: stage1
+  contrastive_heads:
+    nnclr:
+      kind: contrastive_heads.nnclr_queue_head
+      proj_hidden_dim: 2048
+      pred_hidden_dim: 4096
+      output_dim: 256
+      queue_size: 65536
+      temperature: 0.15
+      pooling:
+        kind: mean_patch
+      optim:
+        kind: adamw
+        lr: 0.0001
+        betas:
+          - 0.9
+          - 0.95
+        weight_decay: 1.0e-05
+        schedule:
+          - end_percent: 20
+            exclude_first: true
+            exclude_last: true
+            kind: linear_increasing
+          - exclude_last: true
+            kind: cosine_decreasing
+trainer:
+  kind: mae_contheads_vit_trainer
+  max_epochs: 20
+  effective_batch_size: 1024
+  precision: bfloat16
+  mask_generator:
+    kind: random_mask_generator
+    mask_ratio: 0.0
+  normalize_pixels: true
+  log_every_n_epochs: 1
+  loggers:
+    - kind: group_update_output_logger
+      every_n_samples: 65536
+      pattern: nn_accuracy
+    - every_n_epochs: 1
+      kind: group_update_output_logger
+      pattern: nn_accuracy
+    - kind: checkpoint_logger
+      every_n_epochs: 10
+    - kind: ema_logger
+      every_n_epochs: 10
+      model_paths:
+        - encoder
+      target_factors:
+        - 0.9999

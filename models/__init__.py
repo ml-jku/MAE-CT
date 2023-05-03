@@ -45,6 +45,7 @@ def model_from_kwargs(kind=None, stage_path_provider=None, **kwargs):
             ckpt_kwargs.pop("optim_ctor", None)
             # freezers shouldnt be used
             ckpt_kwargs.pop("freezers", None)
+            ckpt_kwargs.pop("is_frozen", None)
             # check if keys overlap; this can be intended
             # - masked_encoder passes patch_size to decoder (in code)
             # - vit trained with drop_path_rate but then for evaluation this should be set to 0

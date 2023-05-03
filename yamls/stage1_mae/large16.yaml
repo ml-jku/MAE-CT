@@ -1,4 +1,4 @@
-stage_name: pretrain
+stage_name: stage1
 datasets:
   train:
     kind: image_net
@@ -21,8 +21,8 @@ model:
   encoder:
     kind: vit.masked_encoder
     patch_size: 16
-    embedding_dim: 1280
-    depth: 32
+    embedding_dim: 1024
+    depth: 24
     attention_heads: 16
     optim:
       kind: adamw
@@ -62,7 +62,7 @@ model:
 trainer:
   kind: mae_contheads_vit_trainer
   max_epochs: 800
-  effective_batch_size: 512
+  effective_batch_size: 1024
   precision: bfloat16
   mask_generator:
     kind: random_mask_generator

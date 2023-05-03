@@ -1,4 +1,4 @@
-stage_name: stage2
+stage_name: stage3
 datasets:
   train:
     kind: image_net
@@ -22,16 +22,16 @@ model:
   encoder:
     kind: vit.masked_encoder
     patch_size: 16
-    embedding_dim: 1024
-    depth: 24
-    attention_heads: 16
+    embedding_dim: 768
+    depth: 12
+    attention_heads: 12
     optim:
       kind: adamw
       lr: 0.0001
+      weight_decay: 0.05
       betas:
         - 0.9
         - 0.95
-      weight_decay: 0.05
       param_group_modifiers:
         - decay: 0.65
           kind: layerwise_lr_decay_modifier
@@ -43,26 +43,20 @@ model:
         - exclude_last: true
           kind: cosine_decreasing
     freezers:
-      - block_idxs:
+      - kind: vit_block_freezer
+        block_idxs:
           - 0
           - 1
           - 2
           - 3
           - 4
           - 5
-          - 6
-          - 7
-          - 8
-          - 9
-          - 10
-          - 11
-        kind: vit_block_freezer
     initializer:
       checkpoint: last
       kind: previous_run_initializer
       model_name: mae_contheads_vit.encoder
-      stage_id: k6dgjnv2
-      stage_name: stage_train_head
+      stage_id: ???
+      stage_name: stage2
   contrastive_heads:
     nnclr:
       kind: contrastive_heads.nnclr_ema_queue_head
@@ -70,8 +64,11 @@ model:
       pred_hidden_dim: 4096
       output_dim: 256
       queue_size: 65536
-      temperature: 0.2
+      temperature: 0.15
+      target_factor: 0.99
       topk: 20
+      pooling:
+        kind: mean_patch
       optim:
         kind: adamw
         lr: 0.0001
@@ -86,14 +83,12 @@ model:
             kind: linear_increasing
           - exclude_last: true
             kind: cosine_decreasing
-      pooling:
-        kind: class_token
       initializer:
         checkpoint: last
         kind: previous_run_initializer
         model_name: mae_contheads_vit.head.nnclr
-        stage_id: k6dgjnv2
-        stage_name: stage_train_head
+        stage_id: ???
+        stage_name: stage2
 trainer:
   kind: mae_contheads_vit_trainer
   max_epochs: 20
@@ -112,9 +107,9 @@ trainer:
       kind: group_update_output_logger
       pattern: nn_accuracy
     - kind: checkpoint_logger
-      every_n_epochs: 1
+      every_n_epochs: 10
     - kind: ema_logger
-      every_n_epochs: 1
+      every_n_epochs: 10
       model_paths:
         - encoder
       target_factors:

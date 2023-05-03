@@ -88,8 +88,8 @@ To generate these ImageNet subsets we use the
 
 This repo uses [Weights & Biases](https://wandb.ai) for experiment tracking, but offers an alternative in case you do
 not want to use it. By default W&B logging is disabled via the `default_wandb_mode: disabled`
-configuration in the `static_config.yaml`. You can enable it via `static_config.yaml`
-or via the CLI `--wandb_mode online`.
+configuration in the `static_config.yaml`. You can enable it by setting `default_wandb_mode: online` in 
+`static_config.yaml` or via the CLI `--wandb_mode online`.
 
 If you enabled W&B logging, the W&B entity and project will (by default) be fetched from the `wandb_config.yaml`. You
 can create this via `cp template_wandb_config.yaml wandb_config.yaml` and adjust the values to your setup.
@@ -97,10 +97,12 @@ can create this via `cp template_wandb_config.yaml wandb_config.yaml` and adjust
 # Run
 
 To run your own experiments or reproduce our results you have to specify the desired hyperparameters via a yaml file.
-Afterwards start the training/evaluation run by specifying the following CLI arguments for `main_train.py`
+Start the training/evaluation run by specifying the following CLI arguments for `main_train.py`
 
 - `--hp <YAML>` (e.g. `--hp yamls/mae/base16.yaml`)
 - `--devices <DEVICES>` (e.g. `--devices 0` to run on GPU0 or `--devices 0,1,2,3` to run on 4 GPUs)
+
+Example: Train MAE with ViT-B/16 on 4 GPUs: `python main_train.py --hp yamls/mae/base16.yaml --devices 0,1,2,3`
 
 ## Output
 
