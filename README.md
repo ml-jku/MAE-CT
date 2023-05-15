@@ -45,10 +45,10 @@ This repository provides:
 
 |Encoder|Pretrain|Probe|Probe|k-NN|
 |:---:|:---:|:---:|:---:|:---:|
-|[ViT-B/16](https://ml.jku.at/research/maect/download/maect_base16.th)|[hp](https://github.com/ml-jku/MAE-CT/blob/main/yamls/stage3_maectaug_contrastive_tuning/base16.yaml)|[76.9](https://github.com/ml-jku/MAE-CT/blob/main/probes/maectaug_base16.th)|[log](https://github.com/ml-jku/MAE-CT/blob/main/logs/probe/maectaug_base16.th)|73.4|
-|[ViT-L/16](https://ml.jku.at/research/maect/download/maect_large16.th)|[hp](https://github.com/ml-jku/MAE-CT/blob/main/yamls/stage3_maectaug_contrastive_tuning/large16.yaml)|[81.5](https://github.com/ml-jku/MAE-CT/blob/main/probes/maectaug_large16.th)|[log](https://github.com/ml-jku/MAE-CT/blob/main/logs/probe/maectaug_large16.th)|79.1|
-|[ViT-H/16](https://ml.jku.at/research/maect/download/maect_huge16.th)|[hp](https://github.com/ml-jku/MAE-CT/blob/main/yamls/stage3_maectaug_contrastive_tuning/huge16.yaml)|[82.2](https://github.com/ml-jku/MAE-CT/blob/main/probes/maectaug_huge16.th)|[log](https://github.com/ml-jku/MAE-CT/blob/main/logs/probe/maectaug_huge16.th)|79.8|
-|[ViT-H/14](https://ml.jku.at/research/maect/download/maect_huge14.th)|[hp](https://github.com/ml-jku/MAE-CT/blob/main/yamls/stage3_maectaug_contrastive_tuning/huge14.yaml)|[82.0](https://github.com/ml-jku/MAE-CT/blob/main/probes/maectaug_huge14.th)|[log](https://github.com/ml-jku/MAE-CT/blob/main/logs/probe/maectaug_huge14.th)|78.9|
+|[ViT-B/16](https://ml.jku.at/research/maect/download/maectaug_base16.th)|[hp](https://github.com/ml-jku/MAE-CT/blob/main/yamls/stage3_maectaug_contrastive_tuning/base16.yaml)|[76.9](https://github.com/ml-jku/MAE-CT/blob/main/probes/maectaug_base16.th)|[log](https://github.com/ml-jku/MAE-CT/blob/main/logs/probe/maectaug_base16.th)|73.4|
+|[ViT-L/16](https://ml.jku.at/research/maect/download/maectaug_large16.th)|[hp](https://github.com/ml-jku/MAE-CT/blob/main/yamls/stage3_maectaug_contrastive_tuning/large16.yaml)|[81.5](https://github.com/ml-jku/MAE-CT/blob/main/probes/maectaug_large16.th)|[log](https://github.com/ml-jku/MAE-CT/blob/main/logs/probe/maectaug_large16.th)|79.1|
+|[ViT-H/16](https://ml.jku.at/research/maect/download/maectaug_huge16.th)|[hp](https://github.com/ml-jku/MAE-CT/blob/main/yamls/stage3_maectaug_contrastive_tuning/huge16.yaml)|[82.2](https://github.com/ml-jku/MAE-CT/blob/main/probes/maectaug_huge16.th)|[log](https://github.com/ml-jku/MAE-CT/blob/main/logs/probe/maectaug_huge16.th)|79.8|
+|[ViT-H/14](https://ml.jku.at/research/maect/download/maectaug_huge14.th)|[hp](https://github.com/ml-jku/MAE-CT/blob/main/yamls/stage3_maectaug_contrastive_tuning/huge14.yaml)|[82.0](https://github.com/ml-jku/MAE-CT/blob/main/probes/maectaug_huge14.th)|[log](https://github.com/ml-jku/MAE-CT/blob/main/logs/probe/maectaug_huge14.th)|78.9|
 
 # Reproducability
 
