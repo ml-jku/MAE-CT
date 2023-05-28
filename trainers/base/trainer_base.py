@@ -245,7 +245,7 @@ class TrainerBase(TrainerInterface):
         if model.is_batch_size_dependent:
             self.logger.info("model is batch_size dependent -> disabled possible gradient accumulation")
             return effective_batch_size_per_device, 1
-        if model.optim is not None:
+        if model.optim is None:
             # eval runs don't require an optimizer for the model -> use effective_batch_size
             return effective_batch_size_per_device, 1
 
