@@ -70,7 +70,7 @@ Setup a conda environment: `conda env create --file environment_linux.yml --name
 
 We use [FlashAttention](https://github.com/HazyResearch/flash-attention)
 ([paper](https://arxiv.org/abs/2205.14135)) to greatly accelerate computations. We recommend to install it, but this
-repo can be also used without FlashAttention (without modification).
+repo can also be used without FlashAttention (without modification).
 
 ## Configuration of dataset paths and environment specific things
 
