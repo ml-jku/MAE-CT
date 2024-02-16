@@ -1,6 +1,6 @@
 # MAE-CT: Masked Autoencoder Contrastive Tuning
 
-[[Code](https://github.com/ml-jku/MAE-CT)] [[Paper + Appendix](https://arxiv.org/abs/2304.10520)] [[Models](https://github.com/ml-jku/MAE-CT#pretrained-checkpoints)] [[BibTeX](https://github.com/ml-jku/MAE-CT#citation)] [MIM-Refiner (Successor)](https://ml-jku.github.io/MIM-Refiner/)
+[[Code](https://github.com/ml-jku/MAE-CT)] [[Paper + Appendix](https://arxiv.org/abs/2304.10520)] [[Models](https://github.com/ml-jku/MAE-CT#pretrained-checkpoints)] [[BibTeX](https://github.com/ml-jku/MAE-CT#citation)] [[MIM-Refiner (Successor)](https://ml-jku.github.io/MIM-Refiner/)]
 
 
 Pytorch implementation of **M**asked **A**uto**E**ncoder **C**ontrastive **T**uning (MAE-CT)
