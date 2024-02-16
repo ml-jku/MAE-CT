@@ -1,4 +1,4 @@
-[[Code](https://github.com/ml-jku/MAE-CT)] [[Paper + Appendix](https://arxiv.org/abs/2304.10520)] [[Models](https://github.com/ml-jku/MAE-CT#pretrained-checkpoints)] [[BibTeX](https://github.com/ml-jku/MAE-CT#citation)] [MIM-Refiner (Successor)](https://ml-jku.github.io/MIM-Refiner/)
+[[Code](https://github.com/ml-jku/MAE-CT)] [[Paper + Appendix](https://arxiv.org/abs/2304.10520)] [[Models](https://github.com/ml-jku/MAE-CT#pretrained-checkpoints)] [[BibTeX](https://github.com/ml-jku/MAE-CT#citation)] [[MIM-Refiner (Successor)](https://ml-jku.github.io/MIM-Refiner/)]
 
 **M**asked **A**uto**E**ncoder: Contrastive Tuning tunes the representation of a pre-trained MAE to form semantic clusters via a NNCLR training stage.
 
